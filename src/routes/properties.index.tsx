@@ -17,12 +17,10 @@ import {
 } from "@/lib/data";
 
 export const Route = createFileRoute("/properties/")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    transaction:
-      search.transaction === "Achat" || search.transaction === "Location"
-        ? (search.transaction as Transaction)
-        : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { transaction?: Transaction } => {
+    const t = search["transaction"];
+    return t === "Achat" || t === "Location" ? { transaction: t } : {};
+  },
   head: () => ({
     meta: [
       { title: "Catalogue immobilier — Novarys Estate" },
@@ -199,7 +197,7 @@ function Catalogue() {
                 min={transaction === "Location" ? 100_000 : 50_000_000}
                 max={maxBudget}
                 step={transaction === "Location" ? 50_000 : 10_000_000}
-                onValueChange={(v) => setBudget(v[0])}
+                onValueChange={(v) => setBudget(v[0] ?? budgetValue)}
               />
               <p className="mt-2 text-xs text-muted-foreground">
                 {transaction

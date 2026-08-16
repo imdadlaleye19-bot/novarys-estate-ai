@@ -28,7 +28,7 @@ export function SiteHeader() {
             <Link
               key={item.label}
               to={item.to}
-              search={"search" in item ? (item.search as never) : undefined}
+              {...("search" in item ? { search: item.search as never } : {})}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {item.label}
@@ -64,7 +64,7 @@ export function SiteHeader() {
               <Link
                 key={item.label}
                 to={item.to}
-                search={"search" in item ? (item.search as never) : undefined}
+                {...("search" in item ? { search: item.search as never } : {})}
                 onClick={() => setOpen(false)}
                 className="py-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
