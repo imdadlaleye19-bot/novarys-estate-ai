@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AiSearchRouteImport } from './routes/ai-search'
+import { Route as LeadRouteImport } from './routes/lead'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
+import { Route as PropertiesIdRouteImport } from './routes/properties.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,39 +26,75 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiSearchRoute = AiSearchRouteImport.update({
+  id: '/ai-search',
+  path: '/ai-search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeadRoute = LeadRouteImport.update({
+  id: '/lead',
+  path: '/lead',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PropertiesIndexRoute = PropertiesIndexRouteImport.update({
   id: '/properties/',
   path: '/properties/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PropertiesIdRoute = PropertiesIdRouteImport.update({
+  id: '/properties/$id',
+  path: '/properties/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-search': typeof AiSearchRoute
+  '/lead': typeof LeadRoute
+  '/properties/$id': typeof PropertiesIdRoute
   '/properties/': typeof PropertiesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-search': typeof AiSearchRoute
+  '/lead': typeof LeadRoute
+  '/properties/$id': typeof PropertiesIdRoute
   '/properties': typeof PropertiesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-search': typeof AiSearchRoute
+  '/lead': typeof LeadRoute
+  '/properties/$id': typeof PropertiesIdRoute
   '/properties/': typeof PropertiesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/properties/'
+  fullPaths:
+    '/' | '/about' | '/ai-search' | '/lead' | '/properties/$id' | '/properties/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/properties'
-  id: '__root__' | '/' | '/about' | '/properties/'
+  to:
+    '/' | '/about' | '/ai-search' | '/lead' | '/properties/$id' | '/properties'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/ai-search'
+    | '/lead'
+    | '/properties/$id'
+    | '/properties/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AiSearchRoute: typeof AiSearchRoute
+  LeadRoute: typeof LeadRoute
+  PropertiesIdRoute: typeof PropertiesIdRoute
   PropertiesIndexRoute: typeof PropertiesIndexRoute
 }
 
@@ -75,11 +114,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-search': {
+      id: '/ai-search'
+      path: '/ai-search'
+      fullPath: '/ai-search'
+      preLoaderRoute: typeof AiSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lead': {
+      id: '/lead'
+      path: '/lead'
+      fullPath: '/lead'
+      preLoaderRoute: typeof LeadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/properties/': {
       id: '/properties/'
       path: '/properties'
       fullPath: '/properties/'
       preLoaderRoute: typeof PropertiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/properties/$id': {
+      id: '/properties/$id'
+      path: '/properties/$id'
+      fullPath: '/properties/$id'
+      preLoaderRoute: typeof PropertiesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,6 +148,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AiSearchRoute: AiSearchRoute,
+  LeadRoute: LeadRoute,
+  PropertiesIdRoute: PropertiesIdRoute,
   PropertiesIndexRoute: PropertiesIndexRoute,
 }
 export const routeTree = rootRouteImport
