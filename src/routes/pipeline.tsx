@@ -21,7 +21,7 @@ export const Route = createFileRoute("/pipeline")({
       },
     ],
   }),
-  component: Pipeline;
+  component: Pipeline,
 });
 
 function Pipeline() {
