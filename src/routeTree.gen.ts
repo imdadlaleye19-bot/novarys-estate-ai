@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AiSearchRouteImport } from './routes/ai-search'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LeadRouteImport } from './routes/lead'
+import { Route as PipelineRouteImport } from './routes/pipeline'
 import { Route as LeadsIndexRouteImport } from './routes/leads.index'
 import { Route as LeadsIdRouteImport } from './routes/leads.$id'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
@@ -34,6 +36,11 @@ const AiSearchRoute = AiSearchRouteImport.update({
   path: '/ai-search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -42,6 +49,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const LeadRoute = LeadRouteImport.update({
   id: '/lead',
   path: '/lead',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PipelineRoute = PipelineRouteImport.update({
+  id: '/pipeline',
+  path: '/pipeline',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeadsIndexRoute = LeadsIndexRouteImport.update({
@@ -69,8 +81,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/ai-search': typeof AiSearchRoute
+  '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
+  '/pipeline': typeof PipelineRoute
   '/leads/$id': typeof LeadsIdRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/leads/': typeof LeadsIndexRoute
@@ -80,8 +94,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/ai-search': typeof AiSearchRoute
+  '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
+  '/pipeline': typeof PipelineRoute
   '/leads/$id': typeof LeadsIdRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/leads': typeof LeadsIndexRoute
@@ -92,8 +108,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/ai-search': typeof AiSearchRoute
+  '/analytics': typeof AnalyticsRoute
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
+  '/pipeline': typeof PipelineRoute
   '/leads/$id': typeof LeadsIdRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/leads/': typeof LeadsIndexRoute
@@ -105,8 +123,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/ai-search'
+    | '/analytics'
     | '/dashboard'
     | '/lead'
+    | '/pipeline'
     | '/leads/$id'
     | '/properties/$id'
     | '/leads/'
@@ -116,8 +136,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/ai-search'
+    | '/analytics'
     | '/dashboard'
     | '/lead'
+    | '/pipeline'
     | '/leads/$id'
     | '/properties/$id'
     | '/leads'
@@ -127,8 +149,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/ai-search'
+    | '/analytics'
     | '/dashboard'
     | '/lead'
+    | '/pipeline'
     | '/leads/$id'
     | '/properties/$id'
     | '/leads/'
@@ -139,8 +163,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AiSearchRoute: typeof AiSearchRoute
+  AnalyticsRoute: typeof AnalyticsRoute
   DashboardRoute: typeof DashboardRoute
   LeadRoute: typeof LeadRoute
+  PipelineRoute: typeof PipelineRoute
   LeadsIdRoute: typeof LeadsIdRoute
   PropertiesIdRoute: typeof PropertiesIdRoute
   LeadsIndexRoute: typeof LeadsIndexRoute
@@ -170,6 +196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -182,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/lead'
       fullPath: '/lead'
       preLoaderRoute: typeof LeadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pipeline': {
+      id: '/pipeline'
+      path: '/pipeline'
+      fullPath: '/pipeline'
+      preLoaderRoute: typeof PipelineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/leads/': {
@@ -219,8 +259,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AiSearchRoute: AiSearchRoute,
+  AnalyticsRoute: AnalyticsRoute,
   DashboardRoute: DashboardRoute,
   LeadRoute: LeadRoute,
+  PipelineRoute: PipelineRoute,
   LeadsIdRoute: LeadsIdRoute,
   PropertiesIdRoute: PropertiesIdRoute,
   LeadsIndexRoute: LeadsIndexRoute,
