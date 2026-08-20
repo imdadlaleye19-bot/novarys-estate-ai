@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PropertyCard } from "@/components/property-card";
 import { Button } from "@/components/ui/button";
-import { properties, type Property } from "@/lib/data";
+import { getWhatsAppLink, properties, type Property } from "@/lib/data";
 
 export const Route = createFileRoute("/ai-search")({
   head: () => ({

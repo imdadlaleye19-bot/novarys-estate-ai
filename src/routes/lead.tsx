@@ -84,15 +84,16 @@ function LeadPage() {
             automatiquement avec un score de {score}/100 et transmis au pipeline de l'agence.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button
-              variant="accent"
-              onClick={() =>
-                toast.success("Conversation WhatsApp ouverte", {
-                  description: "Démonstration : aucune donnée n'est réellement envoyée.",
-                })
-              }
-            >
-              <MessageCircle className="size-4" /> Continuer sur WhatsApp
+            <Button asChild variant="accent">
+              <a
+                href={getWhatsAppLink(
+                  `Bonjour Novarys Estate, je viens de soumettre ma demande sur le site.\nNom : ${form.name}\nProjet : ${form.type} à ${form.zone}\nBudget : ${form.budget || "non précisé"}\nMerci de me recontacter.`
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle className="size-4" /> Continuer sur WhatsApp
+              </a>
             </Button>
             <Button asChild variant="quiet">
               <Link to="/properties">Continuer à explorer les biens</Link>

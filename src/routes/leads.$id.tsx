@@ -6,7 +6,7 @@ import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { PropertyCard } from "@/components/property-card";
 import { StatusBadge } from "@/routes/leads.index";
-import { getLead, getProperty, type LeadStatus } from "@/lib/data";
+import { getLead, getProperty, getWhatsAppLink, type LeadStatus } from "@/lib/data";
 
 export const Route = createFileRoute("/leads/$id")({
   loader: ({ params }) => {
