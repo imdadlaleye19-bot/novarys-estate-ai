@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { LOCATIONS, PROPERTY_TYPES } from "@/lib/data";
+import { getWhatsAppLink, LOCATIONS, PROPERTY_TYPES } from "@/lib/data";
 
 export const Route = createFileRoute("/lead")({
   head: () => ({
