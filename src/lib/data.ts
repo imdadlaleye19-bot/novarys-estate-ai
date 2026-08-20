@@ -16,6 +16,16 @@ export const LOCATIONS = ["Cocody", "Riviera", "Marcory", "Plateau", "Bingervill
 export const PROPERTY_TYPES: PropertyType[] = ["Appartement", "Villa", "Terrain", "Bureau"];
 export const TRANSACTIONS: Transaction[] = ["Achat", "Location"];
 
+export const AGENCY_WHATSAPP = "+2290153960139";
+export const AGENCY_WHATSAPP_DISPLAY = "+229 01 53 96 01 39";
+
+export function getWhatsAppLink(message?: string) {
+  const number = AGENCY_WHATSAPP.replace(/\D/g, "");
+  const url = new URL(`https://wa.me/${number}`);
+  if (message) url.searchParams.set("text", message);
+  return url.toString();
+}
+
 export interface Property {
   id: string;
   name: string;

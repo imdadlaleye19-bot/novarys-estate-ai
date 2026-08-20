@@ -6,7 +6,7 @@ import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { PropertyCard } from "@/components/property-card";
 import { StatusBadge } from "@/routes/leads.index";
-import { getLead, getProperty, type LeadStatus } from "@/lib/data";
+import { getLead, getProperty, getWhatsAppLink, type LeadStatus } from "@/lib/data";
 
 export const Route = createFileRoute("/leads/$id")({
   loader: ({ params }) => {
@@ -114,14 +114,21 @@ function LeadDetail() {
           <div className="rounded-xl border border-border bg-card p-6">
             <p className="text-sm font-semibold">Actions</p>
             <div className="mt-4 flex flex-col gap-2.5">
-              <Button
-                variant="accent"
-                onClick={() => toast.success(`Message WhatsApp envoyé à ${lead.name}`, { description: "Démonstration." })}
-              >
-                <MessageCircle className="size-4" /> WhatsApp
+              <Button asChild variant="accent">
+                <a
+                  href={getWhatsAppLink(
+                    `Bonjour Novarys Estate, je souhaite échanger au sujet du prospect ${lead.name} (${lead.project} à ${lead.location}).`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MessageCircle className="size-4" /> WhatsApp
+                </a>
               </Button>
-              <Button variant="quiet" onClick={() => toast.success(`Appel lancé vers ${lead.phone}`)}>
-                <Phone className="size-4" /> Call
+              <Button asChild variant="quiet">
+                <a href={`tel:+2290153960139`}>
+                  <Phone className="size-4" /> Call
+                </a>
               </Button>
               <Button variant="quiet" onClick={() => toast.success("Visite programmée", { description: "Créneau ajouté à l'agenda de l'agence." })}>
                 <CalendarClock className="size-4" /> Schedule visit
