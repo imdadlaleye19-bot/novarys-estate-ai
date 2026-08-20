@@ -235,15 +235,18 @@ function AiSearch() {
                 Un conseiller Novarys vous transmet les fiches complètes et organise les visites.
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  variant="accent"
-                  onClick={() =>
-                    toast.success("Sélection envoyée sur WhatsApp", {
-                      description: "Démonstration : aucune donnée n'est réellement transmise.",
-                    })
-                  }
-                >
-                  <MessageCircle className="size-4" /> Recevoir sur WhatsApp
+                <Button asChild variant="accent">
+                  <a
+                    href={getWhatsAppLink(
+                      `Bonjour Novarys Estate, j'ai utilisé l'assistant IA et souhaite recevoir les fiches de : ${results
+                        .map((r) => r.property.name)
+                        .join(", ")}.\nMerci d'organiser une visite.`
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <MessageCircle className="size-4" /> Recevoir sur WhatsApp
+                  </a>
                 </Button>
                 <Button
                   asChild
