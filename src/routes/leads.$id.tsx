@@ -125,8 +125,10 @@ function LeadDetail() {
                   <MessageCircle className="size-4" /> WhatsApp
                 </a>
               </Button>
-              <Button variant="quiet" onClick={() => toast.success(`Appel lancé vers ${lead.phone}`)}>
-                <Phone className="size-4" /> Call
+              <Button asChild variant="quiet">
+                <a href={`tel:+2290153960139`}>
+                  <Phone className="size-4" /> Call
+                </a>
               </Button>
               <Button variant="quiet" onClick={() => toast.success("Visite programmée", { description: "Créneau ajouté à l'agenda de l'agence." })}>
                 <CalendarClock className="size-4" /> Schedule visit
