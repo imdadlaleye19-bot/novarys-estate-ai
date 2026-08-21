@@ -90,9 +90,7 @@ function LeadPage() {
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <Button asChild variant="accent">
               <a
-                href={getWhatsAppLink(
-                  `Bonjour Novarys Estate, je viens de soumettre ma demande sur le site.\nNom : ${form.name}\nProjet : ${form.type} à ${form.zone}\nBudget : ${form.budget || "non précisé"}\nMerci de me recontacter.`
-                )}
+                href={getWhatsAppLink(recap())}
                 target="_blank"
                 rel="noopener noreferrer"
               >
