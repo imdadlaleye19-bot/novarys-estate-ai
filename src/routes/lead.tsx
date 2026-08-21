@@ -60,6 +60,9 @@ function LeadPage() {
   const score = Math.min(98, 40 + filled * 6 + (form.visit === "Oui" ? 8 : 0));
   const ready = form.name && form.phone && form.type && form.zone;
 
+  const recap = () =>
+    `Bonjour Novarys Estate, nouvelle demande depuis le site.\nNom : ${form.name}\nTéléphone : ${form.phone}\nEmail : ${form.email || "non précisé"}\nProjet : ${form.type || "non précisé"} à ${form.zone || "non précisé"}\nBudget : ${form.budget || "non précisé"}\nChambres : ${form.bedrooms || "non précisé"}\nÉchéance : ${form.timing || "non précisée"}\nVisite prochaine : ${form.visit || "non précisé"}\nLead score : ${score}/100`;
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!ready) {
@@ -67,7 +70,8 @@ function LeadPage() {
       return;
     }
     setSent(true);
-    toast.success("Demande transmise à l'équipe commerciale");
+    toast.success("Demande transmise à l'équipe — ouverture de WhatsApp");
+    window.open(getWhatsAppLink(recap()), "_blank", "noopener,noreferrer");
   };
 
   if (sent) {
