@@ -71,6 +71,7 @@ function Chip({
 }
 
 function Catalogue() {
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
   const { transaction: initialTransaction } = Route.useSearch();
   const [query, setQuery] = useState("");
   const [types, setTypes] = useState<PropertyType[]>([]);
