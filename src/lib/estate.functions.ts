@@ -73,20 +73,22 @@ export const getLeadDetail = createServerFn({ method: "GET" })
 
 const newLeadSchema = z.object({
   name: z.string().min(1),
-  phone: z.string().optional(),
-  email: z.string().optional(),
-  project: z.string().optional(),
-  budget: z.number().nullable().optional(),
-  budget_label: z.string().optional(),
-  location: z.string().optional(),
-  property_type: z.string().optional(),
-  bedrooms: z.number().nullable().optional(),
-  move_in: z.string().optional(),
+  phone: z.string().nullable(),
+  email: z.string().nullable(),
+  project: z.string().nullable(),
+  budget: z.number().nullable(),
+  budget_label: z.string().nullable(),
+  location: z.string().nullable(),
+  property_type: z.string().nullable(),
+  bedrooms: z.number().nullable(),
+  move_in: z.string().nullable(),
   score: z.number(),
   status: z.string(),
   stage: z.string(),
   source: z.string(),
 });
+
+export type NewLeadInput = z.infer<typeof newLeadSchema>;
 
 export const createLead = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => newLeadSchema.parse(input))
