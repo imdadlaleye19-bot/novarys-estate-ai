@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -7,11 +8,11 @@ import { PropertyCard } from "@/components/property-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+import { propertiesQuery } from "@/lib/estate-queries";
 import {
   LOCATIONS,
   PROPERTY_TYPES,
   TRANSACTIONS,
-  properties,
   type PropertyType,
   type Transaction,
 } from "@/lib/data";
@@ -20,6 +21,9 @@ export const Route = createFileRoute("/properties/")({
   validateSearch: (search: Record<string, unknown>): { transaction?: Transaction } => {
     const t = search["transaction"];
     return t === "Achat" || t === "Location" ? { transaction: t } : {};
+  },
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(propertiesQuery());
   },
   head: () => ({
     meta: [
@@ -67,6 +71,7 @@ function Chip({
 }
 
 function Catalogue() {
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
   const { transaction: initialTransaction } = Route.useSearch();
   const [query, setQuery] = useState("");
   const [types, setTypes] = useState<PropertyType[]>([]);
