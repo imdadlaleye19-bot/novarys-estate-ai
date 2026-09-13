@@ -1,0 +1,42 @@
+import { queryOptions } from "@tanstack/react-query";
+import { getLeadDetail, getPropertyById, listLeads, listProperties } from "@/lib/estate.functions";
+import { mapLead, mapProperty, type LeadRow, type PropertyRow, type TimelineRow } from "@/lib/mappers";
+
+export const propertiesQuery = () =>
+  queryOptions({
+    queryKey: ["properties"],
+    queryFn: async () => {
+      const rows = (await listProperties()) as unknown as PropertyRow[];
+      return rows.map(mapProperty);
+    },
+  });
+
+export const propertyQuery = (id: string) =>
+  queryOptions({
+    queryKey: ["properties", id],
+    queryFn: async () => {
+      const row = (await getPropertyById({ data: { id } })) as unknown as PropertyRow | null;
+      return row ? mapProperty(row) : null;
+    },
+  });
+
+export const leadsQuery = () =>
+  queryOptions({
+    queryKey: ["leads"],
+    queryFn: async () => {
+      const rows = (await listLeads()) as unknown as LeadRow[];
+      return rows.map((r) => mapLead(r));
+    },
+  });
+
+export const leadQuery = (id: string) =>
+  queryOptions({
+    queryKey: ["leads", id],
+    queryFn: async () => {
+      const res = (await getLeadDetail({ data: { id } })) as unknown as {
+        lead: LeadRow | null;
+        timeline: TimelineRow[];
+      };
+      return res.lead ? mapLead(res.lead, res.timeline) : null;
+    },
+  });
