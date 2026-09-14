@@ -55,6 +55,15 @@ const TIMINGS = ["Immédiatement", "1 à 3 mois", "3 à 6 mois", "Plus tard"];
 function LeadPage() {
   const [form, setForm] = useState({ ...EMPTY });
   const [sent, setSent] = useState(false);
+  const queryClient = useQueryClient();
+  const submitLead = useServerFn(createLead);
+  const mutation = useMutation({
+    mutationFn: submitLead,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["leads"] });
+    },
+  });
+
 
   const set = (key: keyof typeof EMPTY, value: string) =>
     setForm((f) => ({ ...f, [key]: value }));
