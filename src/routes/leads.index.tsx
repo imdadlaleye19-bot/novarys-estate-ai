@@ -96,7 +96,7 @@ function LeadsPage() {
       name: (a, b) => a.name.localeCompare(b.name),
     };
     return [...list].sort(sorters[sort]);
-  }, [query, status, sort]);
+  }, [leads, query, status, sort]);
 
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, pages - 1);
