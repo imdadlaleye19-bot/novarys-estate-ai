@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Bath,
   BedDouble,
@@ -18,11 +19,15 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PropertyCard } from "@/components/property-card";
 import { Button } from "@/components/ui/button";
-import { formatPrice, getProperty, properties } from "@/lib/data";
+import { formatPrice } from "@/lib/data";
+import { propertiesQuery, propertyQuery } from "@/lib/estate-queries";
 
 export const Route = createFileRoute("/properties/$id")({
-  loader: ({ params }) => {
-    const property = getProperty(params.id);
+  loader: async ({ params, context }) => {
+    const [property] = await Promise.all([
+      context.queryClient.ensureQueryData(propertyQuery(params.id)),
+      context.queryClient.ensureQueryData(propertiesQuery()),
+    ]);
     if (!property) throw notFound();
     return { property };
   },
@@ -54,10 +59,14 @@ const FEATURE_ICONS: Record<string, typeof Car> = {
 };
 
 function PropertyDetail() {
-  const { property } = Route.useLoaderData();
+  const { id } = Route.useParams();
+  const { data: loaded } = useSuspenseQuery(propertyQuery(id));
+  const { data: allProperties } = useSuspenseQuery(propertiesQuery());
+  const { property: fallback } = Route.useLoaderData();
+  const property = loaded ?? fallback;
   const [active, setActive] = useState(0);
 
-  const similar = properties
+  const similar = allProperties
     .filter((p) => p.id !== property.id && (p.type === property.type || p.location === property.location))
     .slice(0, 3);
 

@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { createLead } from "@/lib/estate.functions";
 import { CheckCircle2, MessageCircle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { SiteHeader } from "@/components/site-header";
@@ -52,6 +55,15 @@ const TIMINGS = ["Immédiatement", "1 à 3 mois", "3 à 6 mois", "Plus tard"];
 function LeadPage() {
   const [form, setForm] = useState({ ...EMPTY });
   const [sent, setSent] = useState(false);
+  const queryClient = useQueryClient();
+  const submitLead = useServerFn(createLead);
+  const mutation = useMutation({
+    mutationFn: submitLead,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["leads"] });
+    },
+  });
+
 
   const set = (key: keyof typeof EMPTY, value: string) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -63,11 +75,34 @@ function LeadPage() {
   const recap = () =>
     `Bonjour Novarys Estate, nouvelle demande depuis le site.\nNom : ${form.name}\nTéléphone : ${form.phone}\nEmail : ${form.email || "non précisé"}\nProjet : ${form.type || "non précisé"} à ${form.zone || "non précisé"}\nBudget : ${form.budget || "non précisé"}\nChambres : ${form.bedrooms || "non précisé"}\nÉchéance : ${form.timing || "non précisée"}\nVisite prochaine : ${form.visit || "non précisé"}\nLead score : ${score}/100`;
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!ready) {
       toast.error("Complétez au minimum votre nom, téléphone, type de bien et zone.");
       return;
+    }
+    const numericBudget = Number(form.budget.replace(/[^\d]/g, "")) || 0;
+    try {
+      await mutation.mutateAsync({
+        data: {
+          name: form.name,
+          phone: form.phone || null,
+          email: form.email || null,
+          project: form.type === "Bureau" || form.type === "Terrain" ? "Investissement" : "Achat",
+          budget: numericBudget,
+          budget_label: form.budget || "Non précisé",
+          location: form.zone || null,
+          property_type: form.type || null,
+          bedrooms: form.bedrooms ? Number.parseInt(form.bedrooms, 10) || 0 : 0,
+          move_in: form.timing || null,
+          score,
+          status: score >= 80 ? "Hot" : score >= 65 ? "Qualified" : "New",
+          stage: "New Leads",
+          source: "Direct",
+        },
+      });
+    } catch {
+      toast.error("Enregistrement impossible pour le moment — la demande part quand même sur WhatsApp.");
     }
     setSent(true);
     toast.success("Demande transmise à l'équipe — ouverture de WhatsApp");

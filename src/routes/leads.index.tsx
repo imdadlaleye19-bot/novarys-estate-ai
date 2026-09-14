@@ -4,9 +4,14 @@ import { ArrowUpDown, Search } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { leads, type Lead, type LeadStatus } from "@/lib/data";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadsQuery } from "@/lib/estate-queries";
+import { type Lead, type LeadStatus } from "@/lib/data";
 
 export const Route = createFileRoute("/leads/")({
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(leadsQuery());
+  },
   head: () => ({
     meta: [
       { title: "Prospects — Novarys Estate CRM" },
@@ -70,6 +75,7 @@ type SortKey = "score" | "date" | "budget" | "name";
 const PAGE_SIZE = 6;
 
 function LeadsPage() {
+  const { data: leads } = useSuspenseQuery(leadsQuery());
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<LeadStatus | "Tous">("Tous");
   const [sort, setSort] = useState<SortKey>("score");
@@ -90,7 +96,7 @@ function LeadsPage() {
       name: (a, b) => a.name.localeCompare(b.name),
     };
     return [...list].sort(sorters[sort]);
-  }, [query, status, sort]);
+  }, [leads, query, status, sort]);
 
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, pages - 1);

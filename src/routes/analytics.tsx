@@ -17,19 +17,26 @@ import {
 } from "recharts";
 import { AppShell } from "@/components/app-shell";
 import { Panel, tooltipStyle } from "@/routes/dashboard";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadsQuery, propertiesQuery } from "@/lib/estate-queries";
 import {
-  chartColors,
-  chartPalette,
-  leadsGenerated,
-  propertyInterest,
-  qualificationFunnel,
-  requestedBudgets,
-  requestedLocations,
-  trafficData,
-  trafficSources,
-} from "@/lib/data";
+  funnelFrom,
+  leadKpis,
+  leadsByMonth,
+  propertyInterestFrom,
+  requestedBudgetsFrom,
+  requestedLocationsFrom,
+  topRequestedProperties,
+} from "@/lib/insights";
+import { chartColors, chartPalette, trafficData, trafficSources } from "@/lib/data";
 
 export const Route = createFileRoute("/analytics")({
+  loader: async ({ context }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(leadsQuery()),
+      context.queryClient.ensureQueryData(propertiesQuery()),
+    ]);
+  },
   head: () => ({
     meta: [
       { title: "Analytics — Novarys Estate" },
@@ -48,22 +55,28 @@ export const Route = createFileRoute("/analytics")({
   component: Analytics,
 });
 
-const TOP_KPIS = [
-  { label: "Visitors", value: "1 248" },
-  { label: "Leads", value: "186" },
-  { label: "Qualified leads", value: "72" },
-  { label: "Appointments", value: "24" },
-  { label: "Conversion rate", value: "5,8 %" },
-];
-
-const TOP_PROPERTIES = [
-  { name: "Appartement Premium Riviera 2", value: 42 },
-  { name: "Villa Contemporaine Riviera 3", value: 31 },
-  { name: "Villa Duplex Cocody Angré", value: 24 },
-  { name: "Plateau Business Center", value: 18 },
-];
-
 function Analytics() {
+  const { data: leads } = useSuspenseQuery(leadsQuery());
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const k = leadKpis(leads, properties);
+  const leadsGenerated = leadsByMonth(leads);
+  const qualificationFunnel = funnelFrom(leads);
+  const propertyInterest = propertyInterestFrom(leads);
+  const requestedLocations = requestedLocationsFrom(leads);
+  const requestedBudgets = requestedBudgetsFrom(leads);
+  const TOP_PROPERTIES = topRequestedProperties(leads, properties);
+  const maxProperty = TOP_PROPERTIES[0]?.value ?? 1;
+  const maxLocation = requestedLocations[0]?.value ?? 1;
+  const maxBudget = Math.max(...requestedBudgets.map((b) => b.value), 1);
+
+  const TOP_KPIS = [
+    { label: "Biens en ligne", value: `${k.availableProperties}` },
+    { label: "Leads", value: `${k.total}` },
+    { label: "Qualified leads", value: `${k.qualified}` },
+    { label: "Appointments", value: `${k.visits}` },
+    { label: "Conversion rate", value: `${k.conversion.toFixed(1)} %` },
+  ];
+
   return (
     <AppShell title="Analytics" subtitle="Performance commerciale — 30 derniers jours">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -191,7 +204,7 @@ function Analytics() {
                   <span className="font-medium tabular-nums">{p.value}</span>
                 </div>
                 <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full rounded-full bg-foreground" style={{ width: `${(p.value / 42) * 100}%` }} />
+                  <div className="h-full rounded-full bg-foreground" style={{ width: `${(p.value / maxProperty) * 100}%` }} />
                 </div>
               </div>
             ))}
@@ -204,7 +217,7 @@ function Analytics() {
               <div key={l.name} className="flex items-center gap-3">
                 <span className="w-24 text-sm">{l.name}</span>
                 <span className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
-                  <span className="block h-full rounded-full bg-accent" style={{ width: `${(l.value / 38) * 100}%` }} />
+                  <span className="block h-full rounded-full bg-accent" style={{ width: `${(l.value / maxLocation) * 100}%` }} />
                 </span>
                 <span className="w-9 text-right text-sm font-medium">{l.value}%</span>
               </div>
@@ -221,7 +234,7 @@ function Analytics() {
                   <span
                     className="block h-full rounded-full"
                     style={{
-                      width: `${(b.value / 34) * 100}%`,
+                      width: `${(b.value / maxBudget) * 100}%`,
                       background: chartPalette[i % chartPalette.length],
                     }}
                   />

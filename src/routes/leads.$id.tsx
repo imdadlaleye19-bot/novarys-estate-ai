@@ -6,11 +6,16 @@ import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { PropertyCard } from "@/components/property-card";
 import { StatusBadge } from "@/routes/leads.index";
-import { getLead, getProperty, getWhatsAppLink, type LeadStatus } from "@/lib/data";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadQuery, propertiesQuery } from "@/lib/estate-queries";
+import { getWhatsAppLink, type LeadStatus } from "@/lib/data";
 
 export const Route = createFileRoute("/leads/$id")({
-  loader: ({ params }) => {
-    const lead = getLead(params.id);
+  loader: async ({ params, context }) => {
+    const [lead] = await Promise.all([
+      context.queryClient.ensureQueryData(leadQuery(params.id)),
+      context.queryClient.ensureQueryData(propertiesQuery()),
+    ]);
     if (!lead) throw notFound();
     return { lead };
   },
@@ -45,11 +50,15 @@ const NEXT_STATUS: Record<LeadStatus, LeadStatus> = {
 };
 
 function LeadDetail() {
-  const { lead } = Route.useLoaderData();
+  const { id } = Route.useParams();
+  const { lead: fallback } = Route.useLoaderData();
+  const { data: loaded } = useSuspenseQuery(leadQuery(id));
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const lead = loaded ?? fallback;
   const [status, setStatus] = useState<LeadStatus>(lead.status);
 
   const matched = lead.matches
-    .map((id) => getProperty(id))
+    .map((mid) => properties.find((p) => p.id === mid))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
