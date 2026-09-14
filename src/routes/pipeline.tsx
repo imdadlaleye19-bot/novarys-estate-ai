@@ -3,9 +3,14 @@ import { useState } from "react";
 import { GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
-import { PIPELINE_STAGES, formatCompact, leads, type Lead, type PipelineStage } from "@/lib/data";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadsQuery } from "@/lib/estate-queries";
+import { PIPELINE_STAGES, formatCompact, type Lead, type PipelineStage } from "@/lib/data";
 
 export const Route = createFileRoute("/pipeline")({
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(leadsQuery());
+  },
   head: () => ({
     meta: [
       { title: "Pipeline commercial — Novarys Estate" },
