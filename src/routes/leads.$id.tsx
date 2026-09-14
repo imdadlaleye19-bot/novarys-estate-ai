@@ -50,11 +50,15 @@ const NEXT_STATUS: Record<LeadStatus, LeadStatus> = {
 };
 
 function LeadDetail() {
-  const { lead } = Route.useLoaderData();
+  const { id } = Route.useParams();
+  const { lead: fallback } = Route.useLoaderData();
+  const { data: loaded } = useSuspenseQuery(leadQuery(id));
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const lead = loaded ?? fallback;
   const [status, setStatus] = useState<LeadStatus>(lead.status);
 
   const matched = lead.matches
-    .map((id) => getProperty(id))
+    .map((mid) => properties.find((p) => p.id === mid))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
