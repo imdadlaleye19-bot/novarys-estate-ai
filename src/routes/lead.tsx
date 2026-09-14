@@ -75,11 +75,34 @@ function LeadPage() {
   const recap = () =>
     `Bonjour Novarys Estate, nouvelle demande depuis le site.\nNom : ${form.name}\nTéléphone : ${form.phone}\nEmail : ${form.email || "non précisé"}\nProjet : ${form.type || "non précisé"} à ${form.zone || "non précisé"}\nBudget : ${form.budget || "non précisé"}\nChambres : ${form.bedrooms || "non précisé"}\nÉchéance : ${form.timing || "non précisée"}\nVisite prochaine : ${form.visit || "non précisé"}\nLead score : ${score}/100`;
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!ready) {
       toast.error("Complétez au minimum votre nom, téléphone, type de bien et zone.");
       return;
+    }
+    const numericBudget = Number(form.budget.replace(/[^\d]/g, "")) || 0;
+    try {
+      await mutation.mutateAsync({
+        data: {
+          name: form.name,
+          phone: form.phone || null,
+          email: form.email || null,
+          project: form.type === "Bureau" || form.type === "Terrain" ? "Investissement" : "Achat",
+          budget: numericBudget,
+          budget_label: form.budget || "Non précisé",
+          location: form.zone || null,
+          property_type: form.type || null,
+          bedrooms: form.bedrooms ? Number.parseInt(form.bedrooms, 10) || 0 : 0,
+          move_in: form.timing || null,
+          score,
+          status: score >= 80 ? "Hot" : score >= 65 ? "Qualified" : "New",
+          stage: "New Leads",
+          source: "Direct",
+        },
+      });
+    } catch {
+      toast.error("Enregistrement impossible pour le moment — la demande part quand même sur WhatsApp.");
     }
     setSent(true);
     toast.success("Demande transmise à l'équipe — ouverture de WhatsApp");
