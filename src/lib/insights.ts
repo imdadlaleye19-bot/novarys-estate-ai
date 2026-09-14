@@ -7,7 +7,7 @@ export function leadKpis(leads: Lead[], properties: Property[]) {
   const qualified = leads.filter((l) => QUALIFIED.includes(l.status)).length;
   const visits = leads.filter((l) => l.status === "Visit Scheduled" || l.stage === "Visit Scheduled").length;
   const negotiations = leads.filter((l) => l.status === "Negotiation" || l.stage === "Negotiation").length;
-  const won = leads.filter((l) => l.status === "Won" || l.stage === "Closed Won").length;
+  const won = leads.filter((l) => l.status === "Won" || l.stage === "Won").length;
   const conversion = total ? (won / total) * 100 : 0;
   const avgScore = total ? Math.round(leads.reduce((s, l) => s + l.score, 0) / total) : 0;
   return {
