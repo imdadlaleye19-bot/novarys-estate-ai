@@ -87,9 +87,28 @@ export const tooltipStyle = {
 } as const;
 
 function Dashboard() {
+  const { data: leads } = useSuspenseQuery(leadsQuery());
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const k = leadKpis(leads, properties);
+  const leadsGenerated = leadsByMonth(leads);
+  const propertyInterest = propertyInterestFrom(leads);
+
+  const kpis = [
+    { label: "Prospects", value: `${k.total}`, delta: `${k.qualified} qualifiés` },
+    { label: "Qualifiés IA", value: `${k.qualified}`, delta: `score moyen ${k.avgScore}/100` },
+    { label: "Visites programmées", value: `${k.visits}`, delta: `${k.negotiations} en négociation` },
+    { label: "Taux de conversion", value: `${k.conversion.toFixed(1)} %`, delta: `${k.won} vente(s)` },
+    {
+      label: "Valeur pipeline",
+      value: `${formatCompact(k.pipelineValue)}`,
+      delta: `${k.availableProperties} biens disponibles`,
+    },
+  ];
+
   const recentLeads = [...leads]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 5);
+
 
   return (
     <AppShell
