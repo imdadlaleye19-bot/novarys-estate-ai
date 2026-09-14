@@ -4,9 +4,14 @@ import { ArrowUpDown, Search } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { leads, type Lead, type LeadStatus } from "@/lib/data";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadsQuery } from "@/lib/estate-queries";
+import { type Lead, type LeadStatus } from "@/lib/data";
 
 export const Route = createFileRoute("/leads/")({
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(leadsQuery());
+  },
   head: () => ({
     meta: [
       { title: "Prospects — Novarys Estate CRM" },
