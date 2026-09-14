@@ -18,11 +18,15 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PropertyCard } from "@/components/property-card";
 import { Button } from "@/components/ui/button";
-import { formatPrice, getProperty, properties } from "@/lib/data";
+import { formatPrice } from "@/lib/data";
+import { propertiesQuery, propertyQuery } from "@/lib/estate-queries";
 
 export const Route = createFileRoute("/properties/$id")({
-  loader: ({ params }) => {
-    const property = getProperty(params.id);
+  loader: async ({ params, context }) => {
+    const [property] = await Promise.all([
+      context.queryClient.ensureQueryData(propertyQuery(params.id)),
+      context.queryClient.ensureQueryData(propertiesQuery()),
+    ]);
     if (!property) throw notFound();
     return { property };
   },
