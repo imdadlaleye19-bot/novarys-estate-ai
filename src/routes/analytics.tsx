@@ -55,22 +55,28 @@ export const Route = createFileRoute("/analytics")({
   component: Analytics,
 });
 
-const TOP_KPIS = [
-  { label: "Visitors", value: "1 248" },
-  { label: "Leads", value: "186" },
-  { label: "Qualified leads", value: "72" },
-  { label: "Appointments", value: "24" },
-  { label: "Conversion rate", value: "5,8 %" },
-];
-
-const TOP_PROPERTIES = [
-  { name: "Appartement Premium Riviera 2", value: 42 },
-  { name: "Villa Contemporaine Riviera 3", value: 31 },
-  { name: "Villa Duplex Cocody Angré", value: 24 },
-  { name: "Plateau Business Center", value: 18 },
-];
-
 function Analytics() {
+  const { data: leads } = useSuspenseQuery(leadsQuery());
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const k = leadKpis(leads, properties);
+  const leadsGenerated = leadsByMonth(leads);
+  const qualificationFunnel = funnelFrom(leads);
+  const propertyInterest = propertyInterestFrom(leads);
+  const requestedLocations = requestedLocationsFrom(leads);
+  const requestedBudgets = requestedBudgetsFrom(leads);
+  const TOP_PROPERTIES = topRequestedProperties(leads, properties);
+  const maxProperty = TOP_PROPERTIES[0]?.value ?? 1;
+  const maxLocation = requestedLocations[0]?.value ?? 1;
+  const maxBudget = Math.max(...requestedBudgets.map((b) => b.value), 1);
+
+  const TOP_KPIS = [
+    { label: "Biens en ligne", value: `${k.availableProperties}` },
+    { label: "Leads", value: `${k.total}` },
+    { label: "Qualified leads", value: `${k.qualified}` },
+    { label: "Appointments", value: `${k.visits}` },
+    { label: "Conversion rate", value: `${k.conversion.toFixed(1)} %` },
+  ];
+
   return (
     <AppShell title="Analytics" subtitle="Performance commerciale — 30 derniers jours">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
