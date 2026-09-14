@@ -75,6 +75,7 @@ type SortKey = "score" | "date" | "budget" | "name";
 const PAGE_SIZE = 6;
 
 function LeadsPage() {
+  const { data: leads } = useSuspenseQuery(leadsQuery());
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<LeadStatus | "Tous">("Tous");
   const [sort, setSort] = useState<SortKey>("score");
