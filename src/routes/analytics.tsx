@@ -204,7 +204,7 @@ function Analytics() {
                   <span className="font-medium tabular-nums">{p.value}</span>
                 </div>
                 <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full rounded-full bg-foreground" style={{ width: `${(p.value / 42) * 100}%` }} />
+                  <div className="h-full rounded-full bg-foreground" style={{ width: `${(p.value / maxProperty) * 100}%` }} />
                 </div>
               </div>
             ))}
@@ -217,7 +217,7 @@ function Analytics() {
               <div key={l.name} className="flex items-center gap-3">
                 <span className="w-24 text-sm">{l.name}</span>
                 <span className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
-                  <span className="block h-full rounded-full bg-accent" style={{ width: `${(l.value / 38) * 100}%` }} />
+                  <span className="block h-full rounded-full bg-accent" style={{ width: `${(l.value / maxLocation) * 100}%` }} />
                 </span>
                 <span className="w-9 text-right text-sm font-medium">{l.value}%</span>
               </div>
@@ -234,7 +234,7 @@ function Analytics() {
                   <span
                     className="block h-full rounded-full"
                     style={{
-                      width: `${(b.value / 34) * 100}%`,
+                      width: `${(b.value / maxBudget) * 100}%`,
                       background: chartPalette[i % chartPalette.length],
                     }}
                   />
