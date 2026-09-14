@@ -6,11 +6,16 @@ import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { PropertyCard } from "@/components/property-card";
 import { StatusBadge } from "@/routes/leads.index";
-import { getLead, getProperty, getWhatsAppLink, type LeadStatus } from "@/lib/data";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadQuery, propertiesQuery } from "@/lib/estate-queries";
+import { getWhatsAppLink, type LeadStatus } from "@/lib/data";
 
 export const Route = createFileRoute("/leads/$id")({
-  loader: ({ params }) => {
-    const lead = getLead(params.id);
+  loader: async ({ params, context }) => {
+    const [lead] = await Promise.all([
+      context.queryClient.ensureQueryData(leadQuery(params.id)),
+      context.queryClient.ensureQueryData(propertiesQuery()),
+    ]);
     if (!lead) throw notFound();
     return { lead };
   },
