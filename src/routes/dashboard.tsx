@@ -18,19 +18,25 @@ import {
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadsQuery, propertiesQuery } from "@/lib/estate-queries";
+import { leadKpis, leadsByMonth, propertyInterestFrom } from "@/lib/insights";
 import {
   aiActivity,
   chartColors,
   chartPalette,
-  kpis,
-  leads,
-  leadsGenerated,
-  propertyInterest,
+  formatCompact,
   trafficData,
   trafficSources,
 } from "@/lib/data";
 
 export const Route = createFileRoute("/dashboard")({
+  loader: async ({ context }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(leadsQuery()),
+      context.queryClient.ensureQueryData(propertiesQuery()),
+    ]);
+  },
   head: () => ({
     meta: [
       { title: "Dashboard agence — Novarys Estate" },
