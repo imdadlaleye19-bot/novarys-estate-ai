@@ -17,19 +17,26 @@ import {
 } from "recharts";
 import { AppShell } from "@/components/app-shell";
 import { Panel, tooltipStyle } from "@/routes/dashboard";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { leadsQuery, propertiesQuery } from "@/lib/estate-queries";
 import {
-  chartColors,
-  chartPalette,
-  leadsGenerated,
-  propertyInterest,
-  qualificationFunnel,
-  requestedBudgets,
-  requestedLocations,
-  trafficData,
-  trafficSources,
-} from "@/lib/data";
+  funnelFrom,
+  leadKpis,
+  leadsByMonth,
+  propertyInterestFrom,
+  requestedBudgetsFrom,
+  requestedLocationsFrom,
+  topRequestedProperties,
+} from "@/lib/insights";
+import { chartColors, chartPalette, trafficData, trafficSources } from "@/lib/data";
 
 export const Route = createFileRoute("/analytics")({
+  loader: async ({ context }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(leadsQuery()),
+      context.queryClient.ensureQueryData(propertiesQuery()),
+    ]);
+  },
   head: () => ({
     meta: [
       { title: "Analytics — Novarys Estate" },
