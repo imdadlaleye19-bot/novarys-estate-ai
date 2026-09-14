@@ -30,6 +30,7 @@ export const Route = createFileRoute("/pipeline")({
 });
 
 function Pipeline() {
+  const { data: leads } = useSuspenseQuery(leadsQuery());
   const [items, setItems] = useState<Lead[]>(leads);
   const [dragging, setDragging] = useState<string | null>(null);
 
