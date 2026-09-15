@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getLeadDetail, getPropertyById, listLeads, listProperties } from "@/lib/estate.functions";
+import { getLeadDetail, getPropertyById, listAdSpend, listLeads, listProperties } from "@/lib/estate.functions";
 import { mapLead, mapProperty, type LeadRow, type PropertyRow, type TimelineRow } from "@/lib/mappers";
 
 export const propertiesQuery = () =>
@@ -38,5 +38,23 @@ export const leadQuery = (id: string) =>
         timeline: TimelineRow[];
       };
       return res.lead ? mapLead(res.lead, res.timeline) : null;
+    },
+  });
+
+export interface AdSpendRow {
+  id: string;
+  spend_date: string;
+  amount: number;
+  source: string;
+  notes: string | null;
+  created_at: string;
+}
+
+export const adSpendQuery = () =>
+  queryOptions({
+    queryKey: ["ad-spend"],
+    queryFn: async () => {
+      const rows = (await listAdSpend()) as unknown as AdSpendRow[];
+      return rows.map((r) => ({ ...r, amount: Number(r.amount) }));
     },
   });
