@@ -15,7 +15,7 @@ const PROPERTY_COLUMNS =
   "id,name,type,transaction,location,address,price,surface,bedrooms,bathrooms,image_url,gallery,features,description,highlights,available";
 
 const LEAD_COLUMNS =
-  "id,name,phone,email,project,budget,budget_label,location,property_type,bedrooms,move_in,score,status,stage,source,ai_summary,matches,created_at";
+  "id,name,phone,email,project,budget,budget_label,location,property_type,bedrooms,move_in,score,status,stage,source,ai_summary,matches,created_at,sale_amount,closed_at,closed_result";
 
 export const listProperties = createServerFn({ method: "GET" }).handler(async () => {
   const { data, error } = await publicClient()
