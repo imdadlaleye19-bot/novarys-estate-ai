@@ -4,7 +4,9 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PropertyCard } from "@/components/property-card";
 import { Button } from "@/components/ui/button";
-import { heroImage, properties } from "@/lib/data";
+import { heroImage } from "@/lib/data";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { propertiesQuery } from "@/lib/estate-queries";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,6 +25,9 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
+  loader: ({ context }) => {
+    context.queryClient.ensureQueryData(propertiesQuery());
+  },
   component: Landing,
 });
 
@@ -59,6 +64,7 @@ const STEPS = [
 ];
 
 function Landing() {
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
   return (
     <div className="min-h-screen">
       <SiteHeader />
