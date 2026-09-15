@@ -25,6 +25,9 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
+  loader: ({ context }) => {
+    context.queryClient.ensureQueryData(propertiesQuery());
+  },
   component: Landing,
 });
 
@@ -61,6 +64,7 @@ const STEPS = [
 ];
 
 function Landing() {
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
   return (
     <div className="min-h-screen">
       <SiteHeader />
