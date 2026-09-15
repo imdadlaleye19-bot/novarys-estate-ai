@@ -6,6 +6,7 @@ import {
   CalendarCheck,
   KanbanSquare,
   LayoutDashboard,
+  Megaphone,
   Menu,
   Settings,
   Sparkles,
@@ -19,6 +20,7 @@ const NAV = [
   { label: "AI Leads", to: "/leads", icon: Users },
   { label: "Pipeline", to: "/pipeline", icon: KanbanSquare },
   { label: "Appointments", to: "/pipeline", icon: CalendarCheck },
+  { label: "Ad spend", to: "/ad-spend", icon: Megaphone },
   { label: "Analytics", to: "/analytics", icon: BarChart3 },
   { label: "Settings", to: "/dashboard", icon: Settings },
 ] as const;
