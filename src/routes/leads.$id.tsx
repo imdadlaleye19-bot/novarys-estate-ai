@@ -1,14 +1,17 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { CalendarClock, Check, MessageCircle, Phone, RefreshCw, Sparkles } from "lucide-react";
+import { CalendarClock, Check, MessageCircle, Phone, RefreshCw, Sparkles, Trophy, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { PropertyCard } from "@/components/property-card";
 import { StatusBadge } from "@/routes/leads.index";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { leadQuery, propertiesQuery } from "@/lib/estate-queries";
-import { getWhatsAppLink, type LeadStatus } from "@/lib/data";
+import { closeLead } from "@/lib/estate.functions";
+import { formatCompact, getWhatsAppLink, type LeadStatus } from "@/lib/data";
 
 export const Route = createFileRoute("/leads/$id")({
   loader: async ({ params, context }) => {
