@@ -67,6 +67,9 @@ export interface LeadRow {
   ai_summary: string | null;
   matches: string[] | null;
   created_at: string;
+  sale_amount?: number | null;
+  closed_at?: string | null;
+  closed_result?: string | null;
 }
 
 export interface TimelineRow {
@@ -97,6 +100,9 @@ export function mapLead(row: LeadRow, timeline: TimelineRow[] = []): Lead {
     source: (row.source ?? "Direct") as Lead["source"],
     aiSummary: row.ai_summary ?? "",
     matches: row.matches ?? [],
+    saleAmount: row.sale_amount == null ? null : Number(row.sale_amount),
+    closedAt: row.closed_at ?? null,
+    closedResult: (row.closed_result ?? null) as "won" | "lost" | null,
     timeline: timeline
       .filter((t) => t.lead_id === row.id)
       .map((t) => ({ label: t.label, date: t.event_date ?? "", done: Boolean(t.done) })),

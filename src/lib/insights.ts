@@ -96,3 +96,25 @@ export function topRequestedProperties(leads: Lead[], properties: Property[]) {
     .sort((a, b) => b.value - a.value)
     .slice(0, 4);
 }
+
+export function marketingKpis(
+  leads: Lead[],
+  spend: { amount: number }[],
+) {
+  const totalSpend = spend.reduce((s, r) => s + Number(r.amount), 0);
+  const total = leads.length;
+  const qualified = leads.filter((l) => QUALIFIED.includes(l.status) || l.score >= 65).length;
+  const won = leads.filter((l) => l.closedResult === "won").length;
+  const revenue = leads
+    .filter((l) => l.closedResult === "won")
+    .reduce((s, l) => s + Number(l.saleAmount ?? 0), 0);
+  return {
+    totalSpend,
+    costPerLead: total ? totalSpend / total : 0,
+    costPerQualified: qualified ? totalSpend / qualified : 0,
+    closedConversion: total ? (won / total) * 100 : 0,
+    revenue,
+    won,
+    qualified,
+  };
+}

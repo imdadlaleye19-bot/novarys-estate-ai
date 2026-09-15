@@ -277,6 +277,9 @@ export interface Lead {
   source: "Instagram" | "Google" | "Facebook" | "Direct" | "WhatsApp";
   aiSummary: string;
   matches: string[];
+  saleAmount?: number | null;
+  closedAt?: string | null;
+  closedResult?: "won" | "lost" | null;
   timeline: { label: string; date: string; done: boolean }[];
 }
 

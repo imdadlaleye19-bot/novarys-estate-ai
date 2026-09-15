@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      ad_spend: {
+        Row: {
+          agency_id: string | null
+          amount: number
+          created_at: string
+          id: string
+          notes: string | null
+          source: string
+          spend_date: string
+        }
+        Insert: {
+          agency_id?: string | null
+          amount: number
+          created_at?: string
+          id?: string
+          notes?: string | null
+          source?: string
+          spend_date: string
+        }
+        Update: {
+          agency_id?: string | null
+          amount?: number
+          created_at?: string
+          id?: string
+          notes?: string | null
+          source?: string
+          spend_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ad_spend_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       agencies: {
         Row: {
           created_at: string
@@ -77,6 +115,8 @@ export type Database = {
           bedrooms: number | null
           budget: number | null
           budget_label: string | null
+          closed_at: string | null
+          closed_result: string | null
           created_at: string
           email: string | null
           id: string
@@ -87,6 +127,7 @@ export type Database = {
           phone: string | null
           project: string | null
           property_type: string | null
+          sale_amount: number | null
           score: number | null
           source: string | null
           stage: string | null
@@ -98,6 +139,8 @@ export type Database = {
           bedrooms?: number | null
           budget?: number | null
           budget_label?: string | null
+          closed_at?: string | null
+          closed_result?: string | null
           created_at?: string
           email?: string | null
           id?: string
@@ -108,6 +151,7 @@ export type Database = {
           phone?: string | null
           project?: string | null
           property_type?: string | null
+          sale_amount?: number | null
           score?: number | null
           source?: string | null
           stage?: string | null
@@ -119,6 +163,8 @@ export type Database = {
           bedrooms?: number | null
           budget?: number | null
           budget_label?: string | null
+          closed_at?: string | null
+          closed_result?: string | null
           created_at?: string
           email?: string | null
           id?: string
@@ -129,6 +175,7 @@ export type Database = {
           phone?: string | null
           project?: string | null
           property_type?: string | null
+          sale_amount?: number | null
           score?: number | null
           source?: string | null
           stage?: string | null

@@ -179,7 +179,19 @@ function LeadsPage() {
                     <ScoreBar score={l.score} />
                   </td>
                   <td className="px-4 py-3">
-                    <StatusBadge status={l.status} />
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <StatusBadge status={l.status} />
+                      {l.closedResult === "won" && (
+                        <span className="rounded-full bg-success/15 px-2.5 py-1 text-[11px] font-semibold text-success">
+                          Vente conclue
+                        </span>
+                      )}
+                      {l.closedResult === "lost" && (
+                        <span className="rounded-full bg-destructive/12 px-2.5 py-1 text-[11px] font-semibold text-destructive">
+                          Perdu
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
                     {new Date(l.date).toLocaleDateString("fr-FR")}

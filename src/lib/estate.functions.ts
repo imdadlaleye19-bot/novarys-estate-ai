@@ -15,7 +15,7 @@ const PROPERTY_COLUMNS =
   "id,name,type,transaction,location,address,price,surface,bedrooms,bathrooms,image_url,gallery,features,description,highlights,available";
 
 const LEAD_COLUMNS =
-  "id,name,phone,email,project,budget,budget_label,location,property_type,bedrooms,move_in,score,status,stage,source,ai_summary,matches,created_at";
+  "id,name,phone,email,project,budget,budget_label,location,property_type,bedrooms,move_in,score,status,stage,source,ai_summary,matches,created_at,sale_amount,closed_at,closed_result";
 
 export const listProperties = createServerFn({ method: "GET" }).handler(async () => {
   const { data, error } = await publicClient()
@@ -94,6 +94,60 @@ export const createLead = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => newLeadSchema.parse(input))
   .handler(async ({ data }) => {
     const { error } = await publicClient().from("leads").insert(data);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+const closeLeadSchema = z.object({
+  id: z.string(),
+  result: z.enum(["won", "lost"]),
+  sale_amount: z.number().nullable(),
+});
+
+export const closeLead = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => closeLeadSchema.parse(input))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin
+      .from("leads")
+      .update({
+        closed_result: data.result,
+        closed_at: new Date().toISOString(),
+        sale_amount: data.result === "won" ? data.sale_amount : null,
+        status: data.result === "won" ? "Won" : "Contacted",
+        stage: data.result === "won" ? "Won" : "Contacted",
+      })
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+const AD_SPEND_COLUMNS = "id,spend_date,amount,source,notes,created_at";
+
+export const listAdSpend = createServerFn({ method: "GET" }).handler(async () => {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data, error } = await supabaseAdmin
+    .from("ad_spend")
+    .select(AD_SPEND_COLUMNS)
+    .order("spend_date", { ascending: false });
+  if (error) throw new Error(error.message);
+  return data ?? [];
+});
+
+const newAdSpendSchema = z.object({
+  spend_date: z.string().min(1),
+  amount: z.number().nonnegative(),
+  source: z.string().min(1),
+  notes: z.string().nullable(),
+});
+
+export type NewAdSpendInput = z.infer<typeof newAdSpendSchema>;
+
+export const createAdSpend = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => newAdSpendSchema.parse(input))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.from("ad_spend").insert(data);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
