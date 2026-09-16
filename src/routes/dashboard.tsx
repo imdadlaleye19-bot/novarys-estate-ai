@@ -136,6 +136,38 @@ function Dashboard() {
         ))}
       </div>
 
+      {/* Performance marketing */}
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          {
+            label: "Coût par prospect",
+            value: formatCompact(Math.round(m.costPerLead)),
+            delta: `${formatCompact(m.totalSpend)} investis`,
+          },
+          {
+            label: "Coût par prospect qualifié",
+            value: formatCompact(Math.round(m.costPerQualified)),
+            delta: `${m.qualified} qualifiés`,
+          },
+          {
+            label: "Taux de conversion",
+            value: `${m.closedConversion.toFixed(1)} %`,
+            delta: `${m.won} vente(s) conclue(s)`,
+          },
+          {
+            label: "CA généré",
+            value: formatCompact(m.revenue),
+            delta: "ventes conclues",
+          },
+        ].map((c) => (
+          <div key={c.label} className="rounded-xl border border-border bg-card p-5">
+            <p className="font-display text-3xl">{c.value}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{c.label}</p>
+            <p className="mt-3 text-xs font-medium text-accent">{c.delta}</p>
+          </div>
+        ))}
+      </div>
+
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         <Panel title="Leads generated" subtitle="Volume mensuel et part qualifiée" className="lg:col-span-2">
           <ResponsiveContainer width="100%" height={260}>
