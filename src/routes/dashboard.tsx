@@ -19,8 +19,8 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { leadsQuery, propertiesQuery } from "@/lib/estate-queries";
-import { leadKpis, leadsByMonth, propertyInterestFrom } from "@/lib/insights";
+import { adSpendQuery, leadsQuery, propertiesQuery } from "@/lib/estate-queries";
+import { leadKpis, leadsByMonth, marketingKpis, propertyInterestFrom } from "@/lib/insights";
 import {
   aiActivity,
   chartColors,
