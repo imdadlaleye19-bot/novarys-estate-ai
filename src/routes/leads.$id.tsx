@@ -59,6 +59,24 @@ function LeadDetail() {
   const { data: properties } = useSuspenseQuery(propertiesQuery());
   const lead = loaded ?? fallback;
   const [status, setStatus] = useState<LeadStatus>(lead.status);
+  const [amount, setAmount] = useState("");
+  const queryClient = useQueryClient();
+  const close = useServerFn(closeLead);
+  const closeMutation = useMutation({
+    mutationFn: (result: "won" | "lost") =>
+      close({
+        data: {
+          id: lead.id,
+          result,
+          sale_amount: result === "won" ? Number(amount.replace(/[^\d]/g, "")) || 0 : null,
+        },
+      }),
+    onSuccess: (_res, result) => {
+      queryClient.invalidateQueries({ queryKey: ["leads"] });
+      toast.success(result === "won" ? "Vente conclue enregistrée" : "Prospect marqué comme perdu");
+    },
+    onError: () => toast.error("Enregistrement impossible pour le moment."),
+  });
 
   const matched = lead.matches
     .map((mid) => properties.find((p) => p.id === mid))
