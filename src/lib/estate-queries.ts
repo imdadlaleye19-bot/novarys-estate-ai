@@ -1,5 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getLeadDetail, getPropertyById, listAdSpend, listLeads, listProperties } from "@/lib/estate.functions";
+import {
+  getLeadDetail,
+  getPropertyById,
+  listAdSpend,
+  listAppointments,
+  listLeads,
+  listProperties,
+} from "@/lib/estate.functions";
 import { mapLead, mapProperty, type LeadRow, type PropertyRow, type TimelineRow } from "@/lib/mappers";
 
 export const propertiesQuery = () =>

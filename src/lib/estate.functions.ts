@@ -151,3 +151,63 @@ export const createAdSpend = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+/* ---------------------------------- RDV ---------------------------------- */
+
+const APPOINTMENT_COLUMNS =
+  "id,lead_id,scheduled_at,duration_minutes,status,notes,created_at";
+
+export const listAppointments = createServerFn({ method: "GET" }).handler(async () => {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data, error } = await supabaseAdmin
+    .from("appointments")
+    .select(APPOINTMENT_COLUMNS)
+    .order("scheduled_at", { ascending: true });
+  if (error) throw new Error(error.message);
+  return data ?? [];
+});
+
+const APPOINTMENT_STATUSES = [
+  "scheduled",
+  "confirmed",
+  "completed",
+  "cancelled",
+  "no_show",
+] as const;
+
+const newAppointmentSchema = z.object({
+  lead_id: z.string().min(1),
+  scheduled_at: z.string().min(1),
+  duration_minutes: z.number().int().positive(),
+  notes: z.string().nullable(),
+});
+
+export type NewAppointmentInput = z.infer<typeof newAppointmentSchema>;
+
+export const createAppointment = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => newAppointmentSchema.parse(input))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin
+      .from("appointments")
+      .insert({ ...data, status: "scheduled" });
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+const updateAppointmentSchema = z.object({
+  id: z.string(),
+  status: z.enum(APPOINTMENT_STATUSES),
+});
+
+export const updateAppointmentStatus = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => updateAppointmentSchema.parse(input))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin
+      .from("appointments")
+      .update({ status: data.status })
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
