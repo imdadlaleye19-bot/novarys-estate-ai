@@ -19,8 +19,8 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { leadsQuery, propertiesQuery } from "@/lib/estate-queries";
-import { leadKpis, leadsByMonth, propertyInterestFrom } from "@/lib/insights";
+import { adSpendQuery, leadsQuery, propertiesQuery } from "@/lib/estate-queries";
+import { leadKpis, leadsByMonth, marketingKpis, propertyInterestFrom } from "@/lib/insights";
 import {
   aiActivity,
   chartColors,
@@ -35,6 +35,7 @@ export const Route = createFileRoute("/dashboard")({
     await Promise.all([
       context.queryClient.ensureQueryData(leadsQuery()),
       context.queryClient.ensureQueryData(propertiesQuery()),
+      context.queryClient.ensureQueryData(adSpendQuery()),
     ]);
   },
   head: () => ({
@@ -89,6 +90,8 @@ export const tooltipStyle = {
 function Dashboard() {
   const { data: leads } = useSuspenseQuery(leadsQuery());
   const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const { data: adSpend } = useSuspenseQuery(adSpendQuery());
+  const m = marketingKpis(leads, adSpend);
   const k = leadKpis(leads, properties);
   const leadsGenerated = leadsByMonth(leads);
   const propertyInterest = propertyInterestFrom(leads);
@@ -129,6 +132,38 @@ function Dashboard() {
             <p className="font-display text-3xl">{k.value}</p>
             <p className="mt-1 text-xs text-muted-foreground">{k.label}</p>
             <p className="mt-3 text-xs font-medium text-accent">{k.delta}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Performance marketing */}
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          {
+            label: "Coût par prospect",
+            value: formatCompact(Math.round(m.costPerLead)),
+            delta: `${formatCompact(m.totalSpend)} investis`,
+          },
+          {
+            label: "Coût par prospect qualifié",
+            value: formatCompact(Math.round(m.costPerQualified)),
+            delta: `${m.qualified} qualifiés`,
+          },
+          {
+            label: "Taux de conversion",
+            value: `${m.closedConversion.toFixed(1)} %`,
+            delta: `${m.won} vente(s) conclue(s)`,
+          },
+          {
+            label: "CA généré",
+            value: formatCompact(m.revenue),
+            delta: "ventes conclues",
+          },
+        ].map((c) => (
+          <div key={c.label} className="rounded-xl border border-border bg-card p-5">
+            <p className="font-display text-3xl">{c.value}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{c.label}</p>
+            <p className="mt-3 text-xs font-medium text-accent">{c.delta}</p>
           </div>
         ))}
       </div>

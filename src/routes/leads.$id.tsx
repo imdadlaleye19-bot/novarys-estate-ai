@@ -59,6 +59,24 @@ function LeadDetail() {
   const { data: properties } = useSuspenseQuery(propertiesQuery());
   const lead = loaded ?? fallback;
   const [status, setStatus] = useState<LeadStatus>(lead.status);
+  const [amount, setAmount] = useState("");
+  const queryClient = useQueryClient();
+  const close = useServerFn(closeLead);
+  const closeMutation = useMutation({
+    mutationFn: (result: "won" | "lost") =>
+      close({
+        data: {
+          id: lead.id,
+          result,
+          sale_amount: result === "won" ? Number(amount.replace(/[^\d]/g, "")) || 0 : null,
+        },
+      }),
+    onSuccess: (_res, result) => {
+      queryClient.invalidateQueries({ queryKey: ["leads"] });
+      toast.success(result === "won" ? "Vente conclue enregistrée" : "Prospect marqué comme perdu");
+    },
+    onError: () => toast.error("Enregistrement impossible pour le moment."),
+  });
 
   const matched = lead.matches
     .map((mid) => properties.find((p) => p.id === mid))
@@ -156,6 +174,46 @@ function LeadDetail() {
                 <RefreshCw className="size-4" /> Change status
               </Button>
             </div>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-6">
+            <p className="text-sm font-semibold">Issue du prospect</p>
+            {lead.closedResult ? (
+              <p className="mt-3 text-sm text-muted-foreground">
+                {lead.closedResult === "won"
+                  ? `Vente conclue · ${formatCompact(lead.saleAmount ?? 0)}`
+                  : "Prospect perdu"}
+              </p>
+            ) : (
+              <>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Montant de la vente (FCFA)
+                </p>
+                <Input
+                  className="mt-2"
+                  inputMode="numeric"
+                  placeholder="85 000 000"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+                <div className="mt-4 flex flex-col gap-2.5">
+                  <Button
+                    variant="hero"
+                    disabled={closeMutation.isPending}
+                    onClick={() => closeMutation.mutate("won")}
+                  >
+                    <Trophy className="size-4" /> Vente conclue
+                  </Button>
+                  <Button
+                    variant="quiet"
+                    disabled={closeMutation.isPending}
+                    onClick={() => closeMutation.mutate("lost")}
+                  >
+                    <XCircle className="size-4" /> Marquer perdu
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
 
           <div className="rounded-xl border border-border bg-card p-6">
