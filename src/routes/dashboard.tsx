@@ -35,6 +35,7 @@ export const Route = createFileRoute("/dashboard")({
     await Promise.all([
       context.queryClient.ensureQueryData(leadsQuery()),
       context.queryClient.ensureQueryData(propertiesQuery()),
+      context.queryClient.ensureQueryData(adSpendQuery()),
     ]);
   },
   head: () => ({
@@ -89,6 +90,8 @@ export const tooltipStyle = {
 function Dashboard() {
   const { data: leads } = useSuspenseQuery(leadsQuery());
   const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const { data: adSpend } = useSuspenseQuery(adSpendQuery());
+  const m = marketingKpis(leads, adSpend);
   const k = leadKpis(leads, properties);
   const leadsGenerated = leadsByMonth(leads);
   const propertyInterest = propertyInterestFrom(leads);
