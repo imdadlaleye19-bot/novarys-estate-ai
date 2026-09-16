@@ -65,3 +65,26 @@ export const adSpendQuery = () =>
       return rows.map((r) => ({ ...r, amount: Number(r.amount) }));
     },
   });
+
+export type AppointmentStatus =
+  | "scheduled"
+  | "confirmed"
+  | "completed"
+  | "cancelled"
+  | "no_show";
+
+export interface AppointmentRow {
+  id: string;
+  lead_id: string | null;
+  scheduled_at: string;
+  duration_minutes: number;
+  status: AppointmentStatus;
+  notes: string | null;
+  created_at: string;
+}
+
+export const appointmentsQuery = () =>
+  queryOptions({
+    queryKey: ["appointments"],
+    queryFn: async () => (await listAppointments()) as unknown as AppointmentRow[],
+  });
