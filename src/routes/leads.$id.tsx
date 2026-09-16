@@ -177,6 +177,46 @@ function LeadDetail() {
           </div>
 
           <div className="rounded-xl border border-border bg-card p-6">
+            <p className="text-sm font-semibold">Issue du prospect</p>
+            {lead.closedResult ? (
+              <p className="mt-3 text-sm text-muted-foreground">
+                {lead.closedResult === "won"
+                  ? `Vente conclue · ${formatCompact(lead.saleAmount ?? 0)}`
+                  : "Prospect perdu"}
+              </p>
+            ) : (
+              <>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Montant de la vente (FCFA)
+                </p>
+                <Input
+                  className="mt-2"
+                  inputMode="numeric"
+                  placeholder="85 000 000"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+                <div className="mt-4 flex flex-col gap-2.5">
+                  <Button
+                    variant="hero"
+                    disabled={closeMutation.isPending}
+                    onClick={() => closeMutation.mutate("won")}
+                  >
+                    <Trophy className="size-4" /> Vente conclue
+                  </Button>
+                  <Button
+                    variant="quiet"
+                    disabled={closeMutation.isPending}
+                    onClick={() => closeMutation.mutate("lost")}
+                  >
+                    <XCircle className="size-4" /> Marquer perdu
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-6">
             <p className="text-sm font-semibold">Timeline</p>
             <ol className="mt-5 space-y-5">
               {lead.timeline.map((t) => (
