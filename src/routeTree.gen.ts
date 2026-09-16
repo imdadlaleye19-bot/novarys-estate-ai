@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdSpendRouteImport } from './routes/ad-spend'
 import { Route as AiSearchRouteImport } from './routes/ai-search'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
+import { Route as AppointmentsRouteImport } from './routes/appointments'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LeadRouteImport } from './routes/lead'
 import { Route as PipelineRouteImport } from './routes/pipeline'
@@ -45,6 +46,11 @@ const AiSearchRoute = AiSearchRouteImport.update({
 const AnalyticsRoute = AnalyticsRouteImport.update({
   id: '/analytics',
   path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppointmentsRoute = AppointmentsRouteImport.update({
+  id: '/appointments',
+  path: '/appointments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/ad-spend': typeof AdSpendRoute
   '/ai-search': typeof AiSearchRoute
   '/analytics': typeof AnalyticsRoute
+  '/appointments': typeof AppointmentsRoute
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
   '/pipeline': typeof PipelineRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/ad-spend': typeof AdSpendRoute
   '/ai-search': typeof AiSearchRoute
   '/analytics': typeof AnalyticsRoute
+  '/appointments': typeof AppointmentsRoute
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
   '/pipeline': typeof PipelineRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/ad-spend': typeof AdSpendRoute
   '/ai-search': typeof AiSearchRoute
   '/analytics': typeof AnalyticsRoute
+  '/appointments': typeof AppointmentsRoute
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
   '/pipeline': typeof PipelineRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/ad-spend'
     | '/ai-search'
     | '/analytics'
+    | '/appointments'
     | '/dashboard'
     | '/lead'
     | '/pipeline'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/ad-spend'
     | '/ai-search'
     | '/analytics'
+    | '/appointments'
     | '/dashboard'
     | '/lead'
     | '/pipeline'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/ad-spend'
     | '/ai-search'
     | '/analytics'
+    | '/appointments'
     | '/dashboard'
     | '/lead'
     | '/pipeline'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   AdSpendRoute: typeof AdSpendRoute
   AiSearchRoute: typeof AiSearchRoute
   AnalyticsRoute: typeof AnalyticsRoute
+  AppointmentsRoute: typeof AppointmentsRoute
   DashboardRoute: typeof DashboardRoute
   LeadRoute: typeof LeadRoute
   PipelineRoute: typeof PipelineRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/analytics'
       fullPath: '/analytics'
       preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/appointments': {
+      id: '/appointments'
+      path: '/appointments'
+      fullPath: '/appointments'
+      preLoaderRoute: typeof AppointmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdSpendRoute: AdSpendRoute,
   AiSearchRoute: AiSearchRoute,
   AnalyticsRoute: AnalyticsRoute,
+  AppointmentsRoute: AppointmentsRoute,
   DashboardRoute: DashboardRoute,
   LeadRoute: LeadRoute,
   PipelineRoute: PipelineRoute,

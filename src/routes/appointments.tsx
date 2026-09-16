@@ -15,6 +15,7 @@ import {
   type AppointmentRow,
   type AppointmentStatus,
 } from "@/lib/estate-queries";
+import { updateAppointmentStatus } from "@/lib/estate.functions";
 
 export const Route = createFileRoute("/appointments")({
   loader: async ({ context }) => {
@@ -72,14 +73,10 @@ function AppointmentsPage() {
   const { data: appointments } = useSuspenseQuery(appointmentsQuery());
   const { data: leads } = useSuspenseQuery(leadsQuery());
   const queryClient = useQueryClient();
-  const update = useServerFn(
-    (await0 => await0) as never,
-  ) as never;
 
   return (
     <AppShell title="Rendez-vous" subtitle="Agenda des visites et échanges prospects">
       <Inner appointments={appointments} leads={leads} queryClient={queryClient} />
-      {void update}
     </AppShell>
   );
 }
