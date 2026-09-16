@@ -73,6 +73,54 @@ export type Database = {
         }
         Relationships: []
       }
+      appointments: {
+        Row: {
+          agency_id: string | null
+          created_at: string
+          duration_minutes: number
+          id: string
+          lead_id: string | null
+          notes: string | null
+          scheduled_at: string
+          status: string
+        }
+        Insert: {
+          agency_id?: string | null
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          lead_id?: string | null
+          notes?: string | null
+          scheduled_at: string
+          status?: string
+        }
+        Update: {
+          agency_id?: string | null
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          lead_id?: string | null
+          notes?: string | null
+          scheduled_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lead_timeline: {
         Row: {
           created_at: string

@@ -19,7 +19,7 @@ const NAV = [
   { label: "Properties", to: "/properties", icon: Building2 },
   { label: "AI Leads", to: "/leads", icon: Users },
   { label: "Pipeline", to: "/pipeline", icon: KanbanSquare },
-  { label: "Appointments", to: "/pipeline", icon: CalendarCheck },
+  { label: "Appointments", to: "/appointments", icon: CalendarCheck },
   { label: "Ad spend", to: "/ad-spend", icon: Megaphone },
   { label: "Analytics", to: "/analytics", icon: BarChart3 },
   { label: "Settings", to: "/dashboard", icon: Settings },

@@ -1,5 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getLeadDetail, getPropertyById, listAdSpend, listLeads, listProperties } from "@/lib/estate.functions";
+import {
+  getLeadDetail,
+  getPropertyById,
+  listAdSpend,
+  listAppointments,
+  listLeads,
+  listProperties,
+} from "@/lib/estate.functions";
 import { mapLead, mapProperty, type LeadRow, type PropertyRow, type TimelineRow } from "@/lib/mappers";
 
 export const propertiesQuery = () =>
@@ -57,4 +64,27 @@ export const adSpendQuery = () =>
       const rows = (await listAdSpend()) as unknown as AdSpendRow[];
       return rows.map((r) => ({ ...r, amount: Number(r.amount) }));
     },
+  });
+
+export type AppointmentStatus =
+  | "scheduled"
+  | "confirmed"
+  | "completed"
+  | "cancelled"
+  | "no_show";
+
+export interface AppointmentRow {
+  id: string;
+  lead_id: string | null;
+  scheduled_at: string;
+  duration_minutes: number;
+  status: AppointmentStatus;
+  notes: string | null;
+  created_at: string;
+}
+
+export const appointmentsQuery = () =>
+  queryOptions({
+    queryKey: ["appointments"],
+    queryFn: async () => (await listAppointments()) as unknown as AppointmentRow[],
   });
