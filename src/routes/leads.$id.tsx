@@ -9,15 +9,26 @@ import { PropertyCard } from "@/components/property-card";
 import { StatusBadge } from "@/routes/leads.index";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { leadQuery, propertiesQuery } from "@/lib/estate-queries";
-import { closeLead } from "@/lib/estate.functions";
+import {
+  appointmentsQuery,
+  leadQuery,
+  propertiesQuery,
+  type AppointmentStatus,
+} from "@/lib/estate-queries";
+import { closeLead, createAppointment, updateAppointmentStatus } from "@/lib/estate.functions";
 import { formatCompact, getWhatsAppLink, type LeadStatus } from "@/lib/data";
+import {
+  AppointmentBadge,
+  AppointmentQuickActions,
+  formatSlot,
+} from "@/components/appointment-actions";
 
 export const Route = createFileRoute("/leads/$id")({
   loader: async ({ params, context }) => {
     const [lead] = await Promise.all([
       context.queryClient.ensureQueryData(leadQuery(params.id)),
       context.queryClient.ensureQueryData(propertiesQuery()),
+      context.queryClient.ensureQueryData(appointmentsQuery()),
     ]);
     if (!lead) throw notFound();
     return { lead };
@@ -57,9 +68,13 @@ function LeadDetail() {
   const { lead: fallback } = Route.useLoaderData();
   const { data: loaded } = useSuspenseQuery(leadQuery(id));
   const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const { data: allAppointments } = useSuspenseQuery(appointmentsQuery());
   const lead = loaded ?? fallback;
   const [status, setStatus] = useState<LeadStatus>(lead.status);
   const [amount, setAmount] = useState("");
+  const [rdvDate, setRdvDate] = useState("");
+  const [rdvTime, setRdvTime] = useState("10:00");
+  const [rdvDuration, setRdvDuration] = useState("30");
   const queryClient = useQueryClient();
   const close = useServerFn(closeLead);
   const closeMutation = useMutation({
@@ -76,6 +91,40 @@ function LeadDetail() {
       toast.success(result === "won" ? "Vente conclue enregistrée" : "Prospect marqué comme perdu");
     },
     onError: () => toast.error("Enregistrement impossible pour le moment."),
+  });
+
+  const appointments = allAppointments
+    .filter((a) => a.lead_id === lead.id)
+    .sort((a, b) => b.scheduled_at.localeCompare(a.scheduled_at));
+
+  const createRdv = useServerFn(createAppointment);
+  const rdvMutation = useMutation({
+    mutationFn: () =>
+      createRdv({
+        data: {
+          lead_id: lead.id,
+          scheduled_at: new Date(`${rdvDate}T${rdvTime}:00`).toISOString(),
+          duration_minutes: Number(rdvDuration) || 30,
+          notes: null,
+        },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      toast.success("Rendez-vous planifié", { description: "Créneau ajouté à l'agenda de l'agence." });
+      setRdvDate("");
+    },
+    onError: () => toast.error("Impossible de planifier ce rendez-vous."),
+  });
+
+  const updateRdv = useServerFn(updateAppointmentStatus);
+  const rdvStatusMutation = useMutation({
+    mutationFn: (vars: { id: string; status: AppointmentStatus }) =>
+      updateRdv({ data: vars }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      toast.success("Statut du rendez-vous mis à jour");
+    },
+    onError: () => toast.error("Mise à jour impossible pour le moment."),
   });
 
   const matched = lead.matches
@@ -172,6 +221,71 @@ function LeadDetail() {
                 }}
               >
                 <RefreshCw className="size-4" /> Change status
+              </Button>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-6">
+            <p className="text-sm font-semibold">Rendez-vous</p>
+            {appointments.length > 0 ? (
+              <ul className="mt-4 space-y-4">
+                {appointments.map((a) => (
+                  <li key={a.id} className="rounded-lg border border-border p-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-sm font-medium">{formatSlot(a.scheduled_at)}</p>
+                      <AppointmentBadge status={a.status} />
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Durée : {a.duration_minutes} min
+                    </p>
+                    <div className="mt-3">
+                      <AppointmentQuickActions
+                        status={a.status}
+                        disabled={rdvStatusMutation.isPending}
+                        onChange={(next) => rdvStatusMutation.mutate({ id: a.id, status: next })}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Aucun rendez-vous pour ce prospect.
+              </p>
+            )}
+
+            <div className="mt-5 border-t border-border pt-4">
+              <p className="text-xs font-medium text-muted-foreground">Planifier un rendez-vous</p>
+              <div className="mt-3 grid grid-cols-2 gap-2.5">
+                <Input
+                  type="date"
+                  value={rdvDate}
+                  onChange={(e) => setRdvDate(e.target.value)}
+                />
+                <Input
+                  type="time"
+                  value={rdvTime}
+                  onChange={(e) => setRdvTime(e.target.value)}
+                />
+                <select
+                  value={rdvDuration}
+                  onChange={(e) => setRdvDuration(e.target.value)}
+                  className="col-span-2 h-10 rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  {[15, 30, 45, 60, 90].map((d) => (
+                    <option key={d} value={d}>
+                      {d} minutes
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <Button
+                className="mt-3 w-full"
+                variant="hero"
+                disabled={!rdvDate || rdvMutation.isPending}
+                onClick={() => rdvMutation.mutate()}
+              >
+                <CalendarClock className="size-4" /> Planifier le RDV
               </Button>
             </div>
           </div>

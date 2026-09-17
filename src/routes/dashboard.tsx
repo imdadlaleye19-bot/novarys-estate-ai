@@ -19,7 +19,7 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { adSpendQuery, leadsQuery, propertiesQuery } from "@/lib/estate-queries";
+import { adSpendQuery, appointmentsQuery, leadsQuery, propertiesQuery } from "@/lib/estate-queries";
 import { leadKpis, leadsByMonth, marketingKpis, propertyInterestFrom } from "@/lib/insights";
 import {
   aiActivity,
@@ -36,6 +36,7 @@ export const Route = createFileRoute("/dashboard")({
       context.queryClient.ensureQueryData(leadsQuery()),
       context.queryClient.ensureQueryData(propertiesQuery()),
       context.queryClient.ensureQueryData(adSpendQuery()),
+      context.queryClient.ensureQueryData(appointmentsQuery()),
     ]);
   },
   head: () => ({
@@ -91,7 +92,10 @@ function Dashboard() {
   const { data: leads } = useSuspenseQuery(leadsQuery());
   const { data: properties } = useSuspenseQuery(propertiesQuery());
   const { data: adSpend } = useSuspenseQuery(adSpendQuery());
+  const { data: appointments } = useSuspenseQuery(appointmentsQuery());
   const m = marketingKpis(leads, adSpend);
+  const activeAppointments = appointments.filter((a) => a.status !== "cancelled").length;
+  const costPerAppointment = activeAppointments > 0 ? m.totalSpend / activeAppointments : 0;
   const k = leadKpis(leads, properties);
   const leadsGenerated = leadsByMonth(leads);
   const propertyInterest = propertyInterestFrom(leads);
@@ -137,7 +141,7 @@ function Dashboard() {
       </div>
 
       {/* Performance marketing */}
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {[
           {
             label: "Coût par prospect",
@@ -148,6 +152,11 @@ function Dashboard() {
             label: "Coût par prospect qualifié",
             value: formatCompact(Math.round(m.costPerQualified)),
             delta: `${m.qualified} qualifiés`,
+          },
+          {
+            label: "Coût par RDV",
+            value: formatCompact(Math.round(costPerAppointment)),
+            delta: `${activeAppointments} RDV hors annulés`,
           },
           {
             label: "Taux de conversion",
