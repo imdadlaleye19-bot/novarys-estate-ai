@@ -9,9 +9,19 @@ import { PropertyCard } from "@/components/property-card";
 import { StatusBadge } from "@/routes/leads.index";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { leadQuery, propertiesQuery } from "@/lib/estate-queries";
-import { closeLead } from "@/lib/estate.functions";
+import {
+  appointmentsQuery,
+  leadQuery,
+  propertiesQuery,
+  type AppointmentStatus,
+} from "@/lib/estate-queries";
+import { closeLead, createAppointment, updateAppointmentStatus } from "@/lib/estate.functions";
 import { formatCompact, getWhatsAppLink, type LeadStatus } from "@/lib/data";
+import {
+  AppointmentBadge,
+  AppointmentQuickActions,
+  formatSlot,
+} from "@/components/appointment-actions";
 
 export const Route = createFileRoute("/leads/$id")({
   loader: async ({ params, context }) => {
