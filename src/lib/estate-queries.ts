@@ -88,3 +88,9 @@ export const appointmentsQuery = () =>
     queryKey: ["appointments"],
     queryFn: async () => (await listAppointments()) as unknown as AppointmentRow[],
   });
+
+export const agencyOverviewQuery = () =>
+  queryOptions({
+    queryKey: ["agency-overview"],
+    queryFn: async () => (await listAgencyOverview()) as unknown as AgencyOverviewRow[],
+  });
