@@ -92,7 +92,10 @@ function Dashboard() {
   const { data: leads } = useSuspenseQuery(leadsQuery());
   const { data: properties } = useSuspenseQuery(propertiesQuery());
   const { data: adSpend } = useSuspenseQuery(adSpendQuery());
+  const { data: appointments } = useSuspenseQuery(appointmentsQuery());
   const m = marketingKpis(leads, adSpend);
+  const activeAppointments = appointments.filter((a) => a.status !== "cancelled").length;
+  const costPerAppointment = activeAppointments > 0 ? m.totalSpend / activeAppointments : 0;
   const k = leadKpis(leads, properties);
   const leadsGenerated = leadsByMonth(leads);
   const propertyInterest = propertyInterestFrom(leads);
