@@ -226,6 +226,71 @@ function LeadDetail() {
           </div>
 
           <div className="rounded-xl border border-border bg-card p-6">
+            <p className="text-sm font-semibold">Rendez-vous</p>
+            {appointments.length > 0 ? (
+              <ul className="mt-4 space-y-4">
+                {appointments.map((a) => (
+                  <li key={a.id} className="rounded-lg border border-border p-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-sm font-medium">{formatSlot(a.scheduled_at)}</p>
+                      <AppointmentBadge status={a.status} />
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Durée : {a.duration_minutes} min
+                    </p>
+                    <div className="mt-3">
+                      <AppointmentQuickActions
+                        status={a.status}
+                        disabled={rdvStatusMutation.isPending}
+                        onChange={(next) => rdvStatusMutation.mutate({ id: a.id, status: next })}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Aucun rendez-vous pour ce prospect.
+              </p>
+            )}
+
+            <div className="mt-5 border-t border-border pt-4">
+              <p className="text-xs font-medium text-muted-foreground">Planifier un rendez-vous</p>
+              <div className="mt-3 grid grid-cols-2 gap-2.5">
+                <Input
+                  type="date"
+                  value={rdvDate}
+                  onChange={(e) => setRdvDate(e.target.value)}
+                />
+                <Input
+                  type="time"
+                  value={rdvTime}
+                  onChange={(e) => setRdvTime(e.target.value)}
+                />
+                <select
+                  value={rdvDuration}
+                  onChange={(e) => setRdvDuration(e.target.value)}
+                  className="col-span-2 h-10 rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  {[15, 30, 45, 60, 90].map((d) => (
+                    <option key={d} value={d}>
+                      {d} minutes
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <Button
+                className="mt-3 w-full"
+                variant="hero"
+                disabled={!rdvDate || rdvMutation.isPending}
+                onClick={() => rdvMutation.mutate()}
+              >
+                <CalendarClock className="size-4" /> Planifier le RDV
+              </Button>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-6">
             <p className="text-sm font-semibold">Issue du prospect</p>
             {lead.closedResult ? (
               <p className="mt-3 text-sm text-muted-foreground">
