@@ -68,9 +68,13 @@ function LeadDetail() {
   const { lead: fallback } = Route.useLoaderData();
   const { data: loaded } = useSuspenseQuery(leadQuery(id));
   const { data: properties } = useSuspenseQuery(propertiesQuery());
+  const { data: allAppointments } = useSuspenseQuery(appointmentsQuery());
   const lead = loaded ?? fallback;
   const [status, setStatus] = useState<LeadStatus>(lead.status);
   const [amount, setAmount] = useState("");
+  const [rdvDate, setRdvDate] = useState("");
+  const [rdvTime, setRdvTime] = useState("10:00");
+  const [rdvDuration, setRdvDuration] = useState("30");
   const queryClient = useQueryClient();
   const close = useServerFn(closeLead);
   const closeMutation = useMutation({
@@ -87,6 +91,40 @@ function LeadDetail() {
       toast.success(result === "won" ? "Vente conclue enregistrée" : "Prospect marqué comme perdu");
     },
     onError: () => toast.error("Enregistrement impossible pour le moment."),
+  });
+
+  const appointments = allAppointments
+    .filter((a) => a.lead_id === lead.id)
+    .sort((a, b) => b.scheduled_at.localeCompare(a.scheduled_at));
+
+  const createRdv = useServerFn(createAppointment);
+  const rdvMutation = useMutation({
+    mutationFn: () =>
+      createRdv({
+        data: {
+          lead_id: lead.id,
+          scheduled_at: new Date(`${rdvDate}T${rdvTime}:00`).toISOString(),
+          duration_minutes: Number(rdvDuration) || 30,
+          notes: null,
+        },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      toast.success("Rendez-vous planifié", { description: "Créneau ajouté à l'agenda de l'agence." });
+      setRdvDate("");
+    },
+    onError: () => toast.error("Impossible de planifier ce rendez-vous."),
+  });
+
+  const updateRdv = useServerFn(updateAppointmentStatus);
+  const rdvStatusMutation = useMutation({
+    mutationFn: (vars: { id: string; status: AppointmentStatus }) =>
+      updateRdv({ data: vars }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      toast.success("Statut du rendez-vous mis à jour");
+    },
+    onError: () => toast.error("Mise à jour impossible pour le moment."),
   });
 
   const matched = lead.matches
