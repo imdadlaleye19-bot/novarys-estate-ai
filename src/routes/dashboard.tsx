@@ -19,7 +19,7 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { adSpendQuery, leadsQuery, propertiesQuery } from "@/lib/estate-queries";
+import { adSpendQuery, appointmentsQuery, leadsQuery, propertiesQuery } from "@/lib/estate-queries";
 import { leadKpis, leadsByMonth, marketingKpis, propertyInterestFrom } from "@/lib/insights";
 import {
   aiActivity,
@@ -36,6 +36,7 @@ export const Route = createFileRoute("/dashboard")({
       context.queryClient.ensureQueryData(leadsQuery()),
       context.queryClient.ensureQueryData(propertiesQuery()),
       context.queryClient.ensureQueryData(adSpendQuery()),
+      context.queryClient.ensureQueryData(appointmentsQuery()),
     ]);
   },
   head: () => ({
