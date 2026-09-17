@@ -28,6 +28,7 @@ export const Route = createFileRoute("/leads/$id")({
     const [lead] = await Promise.all([
       context.queryClient.ensureQueryData(leadQuery(params.id)),
       context.queryClient.ensureQueryData(propertiesQuery()),
+      context.queryClient.ensureQueryData(appointmentsQuery()),
     ]);
     if (!lead) throw notFound();
     return { lead };
