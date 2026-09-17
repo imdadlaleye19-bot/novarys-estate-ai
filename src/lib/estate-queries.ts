@@ -3,9 +3,11 @@ import {
   getLeadDetail,
   getPropertyById,
   listAdSpend,
+  listAgencyOverview,
   listAppointments,
   listLeads,
   listProperties,
+  type AgencyOverviewRow,
 } from "@/lib/estate.functions";
 import { mapLead, mapProperty, type LeadRow, type PropertyRow, type TimelineRow } from "@/lib/mappers";
 
@@ -87,4 +89,10 @@ export const appointmentsQuery = () =>
   queryOptions({
     queryKey: ["appointments"],
     queryFn: async () => (await listAppointments()) as unknown as AppointmentRow[],
+  });
+
+export const agencyOverviewQuery = () =>
+  queryOptions({
+    queryKey: ["agency-overview"],
+    queryFn: async () => (await listAgencyOverview()) as unknown as AgencyOverviewRow[],
   });

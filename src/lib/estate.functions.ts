@@ -211,3 +211,57 @@ export const updateAppointmentStatus = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+/* --------------------------- Vue globale NOVARYS -------------------------- */
+
+export interface AgencyOverviewRow {
+  id: string;
+  name: string;
+  leads: number;
+  spend: number;
+  costPerLead: number;
+  appointments: number;
+  costPerAppointment: number;
+  conversion: number;
+  revenue: number;
+}
+
+export const listAgencyOverview = createServerFn({ method: "GET" }).handler(async () => {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const [agenciesRes, leadsRes, spendRes, apptRes] = await Promise.all([
+    supabaseAdmin.from("agencies").select("id,name").order("name"),
+    supabaseAdmin.from("leads").select("agency_id,closed_result,sale_amount"),
+    supabaseAdmin.from("ad_spend").select("agency_id,amount"),
+    supabaseAdmin.from("appointments").select("agency_id,status"),
+  ]);
+  for (const r of [agenciesRes, leadsRes, spendRes, apptRes]) {
+    if (r.error) throw new Error(r.error.message);
+  }
+
+  const agencies = agenciesRes.data ?? [];
+  const leads = leadsRes.data ?? [];
+  const spend = spendRes.data ?? [];
+  const appts = (apptRes.data ?? []).filter((a) => a.status !== "cancelled");
+
+  const rows: AgencyOverviewRow[] = agencies.map((a) => {
+    const aLeads = leads.filter((l) => l.agency_id === a.id);
+    const aSpend = spend
+      .filter((s) => s.agency_id === a.id)
+      .reduce((sum, s) => sum + Number(s.amount ?? 0), 0);
+    const aAppts = appts.filter((x) => x.agency_id === a.id).length;
+    const won = aLeads.filter((l) => l.closed_result === "won");
+    return {
+      id: a.id,
+      name: a.name,
+      leads: aLeads.length,
+      spend: aSpend,
+      costPerLead: aLeads.length ? aSpend / aLeads.length : 0,
+      appointments: aAppts,
+      costPerAppointment: aAppts ? aSpend / aAppts : 0,
+      conversion: aLeads.length ? (won.length / aLeads.length) * 100 : 0,
+      revenue: won.reduce((sum, l) => sum + Number(l.sale_amount ?? 0), 0),
+    };
+  });
+
+  return rows;
+});

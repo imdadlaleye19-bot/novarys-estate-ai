@@ -18,6 +18,7 @@ import { Route as AppointmentsRouteImport } from './routes/appointments'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LeadRouteImport } from './routes/lead'
 import { Route as PipelineRouteImport } from './routes/pipeline'
+import { Route as AdminOverviewRouteImport } from './routes/admin.overview'
 import { Route as LeadsIndexRouteImport } from './routes/leads.index'
 import { Route as LeadsIdRouteImport } from './routes/leads.$id'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
@@ -68,6 +69,11 @@ const PipelineRoute = PipelineRouteImport.update({
   path: '/pipeline',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminOverviewRoute = AdminOverviewRouteImport.update({
+  id: '/admin/overview',
+  path: '/admin/overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LeadsIndexRoute = LeadsIndexRouteImport.update({
   id: '/leads/',
   path: '/leads/',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
   '/pipeline': typeof PipelineRoute
+  '/admin/overview': typeof AdminOverviewRoute
   '/leads/$id': typeof LeadsIdRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/leads/': typeof LeadsIndexRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
   '/pipeline': typeof PipelineRoute
+  '/admin/overview': typeof AdminOverviewRoute
   '/leads/$id': typeof LeadsIdRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/leads': typeof LeadsIndexRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
   '/pipeline': typeof PipelineRoute
+  '/admin/overview': typeof AdminOverviewRoute
   '/leads/$id': typeof LeadsIdRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/leads/': typeof LeadsIndexRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/lead'
     | '/pipeline'
+    | '/admin/overview'
     | '/leads/$id'
     | '/properties/$id'
     | '/leads/'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/lead'
     | '/pipeline'
+    | '/admin/overview'
     | '/leads/$id'
     | '/properties/$id'
     | '/leads'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/lead'
     | '/pipeline'
+    | '/admin/overview'
     | '/leads/$id'
     | '/properties/$id'
     | '/leads/'
@@ -193,6 +205,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   LeadRoute: typeof LeadRoute
   PipelineRoute: typeof PipelineRoute
+  AdminOverviewRoute: typeof AdminOverviewRoute
   LeadsIdRoute: typeof LeadsIdRoute
   PropertiesIdRoute: typeof PropertiesIdRoute
   LeadsIndexRoute: typeof LeadsIndexRoute
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PipelineRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/overview': {
+      id: '/admin/overview'
+      path: '/admin/overview'
+      fullPath: '/admin/overview'
+      preLoaderRoute: typeof AdminOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/leads/': {
       id: '/leads/'
       path: '/leads'
@@ -305,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   LeadRoute: LeadRoute,
   PipelineRoute: PipelineRoute,
+  AdminOverviewRoute: AdminOverviewRoute,
   LeadsIdRoute: LeadsIdRoute,
   PropertiesIdRoute: PropertiesIdRoute,
   LeadsIndexRoute: LeadsIndexRoute,
