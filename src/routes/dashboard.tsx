@@ -141,7 +141,7 @@ function Dashboard() {
       </div>
 
       {/* Performance marketing */}
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {[
           {
             label: "Coût par prospect",
@@ -152,6 +152,11 @@ function Dashboard() {
             label: "Coût par prospect qualifié",
             value: formatCompact(Math.round(m.costPerQualified)),
             delta: `${m.qualified} qualifiés`,
+          },
+          {
+            label: "Coût par RDV",
+            value: formatCompact(Math.round(costPerAppointment)),
+            delta: `${activeAppointments} RDV hors annulés`,
           },
           {
             label: "Taux de conversion",
