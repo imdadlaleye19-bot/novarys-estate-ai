@@ -43,7 +43,7 @@ export function AppShell({
     <div className="min-h-screen bg-background lg:flex">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 shrink-0 bg-sidebar text-sidebar-foreground transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 shrink-0 border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -70,7 +70,7 @@ export function AppShell({
               onClick={() => setOpen(false)}
               activeOptions={{ exact: true }}
               activeProps={{
-                className: "bg-sidebar-accent text-sidebar-accent-foreground",
+                className: "bg-sidebar-accent text-sidebar-accent-foreground ring-1 ring-primary/20",
               }}
               className="flex items-center gap-3 rounded-md px-3 py-2 text-sm opacity-85 transition-colors hover:bg-sidebar-accent hover:opacity-100"
             >
@@ -92,7 +92,7 @@ export function AppShell({
               Vue globale NOVARYS
             </Link>
           </div>
-          <div className="rounded-lg bg-sidebar-accent p-4">
+          <div className="rounded-lg border border-sidebar-border bg-sidebar-accent p-4">
             <p className="flex items-center gap-2 text-xs font-semibold text-sidebar-primary">
               <Sparkles className="size-3.5" /> Demo Mode
             </p>
@@ -112,7 +112,7 @@ export function AppShell({
       )}
 
       <div className="min-w-0 flex-1">
-        <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-xl">
           <div className="flex flex-wrap items-center gap-3 px-5 py-4 sm:px-8">
             <button
               type="button"
