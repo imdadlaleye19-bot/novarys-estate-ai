@@ -698,11 +698,11 @@ export const aiActivity = [
 ];
 
 export const chartColors = {
-  ink: "oklch(0.26 0.028 165)",
-  bronze: "oklch(0.68 0.095 68)",
-  teal: "oklch(0.6 0.075 190)",
-  sand: "oklch(0.78 0.06 90)",
-  deep: "oklch(0.45 0.05 175)",
+  ink: "#60a5fa",
+  bronze: "#a78bfa",
+  teal: "#2dd4bf",
+  sand: "#fbbf24",
+  deep: "#f472b6",
 };
 
 export const chartPalette = [

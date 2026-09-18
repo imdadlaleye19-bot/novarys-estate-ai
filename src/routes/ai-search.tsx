@@ -164,7 +164,7 @@ function AiSearch() {
               <div className="max-w-[85%] rounded-2xl rounded-tl-sm border border-border bg-card px-4 py-3 text-sm">
                 {s.question}
               </div>
-              <div className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-tr-sm bg-foreground px-4 py-3 text-sm text-background">
+              <div className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-tr-sm bg-primary/15 px-4 py-3 text-sm text-foreground ring-1 ring-primary/30">
                 {answers[s.key]}
               </div>
             </div>
@@ -185,7 +185,7 @@ function AiSearch() {
                     key={o}
                     type="button"
                     onClick={() => pick(o)}
-                    className="rounded-full border border-border px-4 py-2 text-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground hover:bg-foreground hover:text-background"
+                    className="rounded-full border border-border px-4 py-2 text-sm transition-colors duration-300 hover:border-primary/50 hover:bg-primary/10 hover:text-foreground"
                   >
                     {o}
                   </button>

@@ -77,7 +77,7 @@ function Pipeline() {
                       draggable
                       onDragStart={() => setDragging(l.id)}
                       onDragEnd={() => setDragging(null)}
-                      className={`cursor-grab rounded-lg border border-border bg-card p-4 shadow-soft transition-all duration-300 hover:-translate-y-0.5 active:cursor-grabbing ${
+                      className={`cursor-grab rounded-lg border border-border bg-card p-4 shadow-soft transition-colors duration-300 hover:border-primary/45 active:cursor-grabbing ${
                         dragging === l.id ? "opacity-50" : ""
                       }`}
                     >
