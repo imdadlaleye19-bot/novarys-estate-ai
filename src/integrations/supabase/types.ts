@@ -57,21 +57,56 @@ export type Database = {
           created_at: string
           id: string
           name: string
+          slug: string
           whatsapp_number: string | null
         }
         Insert: {
           created_at?: string
           id?: string
           name: string
+          slug: string
           whatsapp_number?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           name?: string
+          slug?: string
           whatsapp_number?: string | null
         }
         Relationships: []
+      }
+      agency_users: {
+        Row: {
+          agency_id: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          agency_id: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          agency_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agency_users_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       appointments: {
         Row: {
@@ -315,7 +350,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_novarys_admin: { Args: never; Returns: boolean }
+      user_agency_ids: { Args: never; Returns: string[] }
     }
     Enums: {
       [_ in never]: never
