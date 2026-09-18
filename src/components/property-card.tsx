@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export function PropertyCard({ property, match }: { property: Property; match?: number }) {
   return (
-    <article className="group overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-lift">
+    <article className="group overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-colors duration-300 hover:border-primary/45">
       <Link
         to="/properties/$id"
         params={{ id: property.id }}
@@ -17,7 +17,7 @@ export function PropertyCard({ property, match }: { property: Property; match?: 
           loading="lazy"
           width={1200}
           height={800}
-          className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="size-full object-cover"
         />
         <div className="absolute left-3 top-3 flex gap-2">
           {property.available && (

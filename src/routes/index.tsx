@@ -4,7 +4,6 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PropertyCard } from "@/components/property-card";
 import { Button } from "@/components/ui/button";
-import { heroImage } from "@/lib/data";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { propertiesQuery } from "@/lib/estate-queries";
 
@@ -70,30 +69,19 @@ function Landing() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative isolate">
-        <div className="relative min-h-[86vh] overflow-hidden">
-          <img
-            src={heroImage}
-            alt="Villa contemporaine premium à Abidjan au coucher du soleil"
-            width={1600}
-            height={1104}
-            className="absolute inset-0 size-full object-cover"
-          />
-          <div
-            className="absolute inset-0"
-            style={{ backgroundImage: "var(--gradient-veil)" }}
-            aria-hidden
-          />
-          <div className="relative mx-auto flex min-h-[86vh] max-w-7xl flex-col justify-end px-5 pb-16 pt-28 sm:px-8 sm:pb-24">
-            <p className="eyebrow animate-rise text-background/70">Novarys Estate</p>
-            <h1 className="animate-rise mt-4 max-w-3xl text-4xl leading-[1.05] text-background sm:text-6xl lg:text-7xl">
-              Find the property that fits your life.
+      <section className="relative isolate overflow-hidden border-b border-border">
+        <div className="relative mx-auto flex min-h-[76vh] max-w-7xl flex-col items-center justify-center px-5 pb-20 pt-36 text-center sm:px-8 sm:pb-24 sm:pt-40">
+          <div className="estate-glow" aria-hidden />
+          <div className="relative z-10 flex max-w-4xl flex-col items-center">
+            <p className="eyebrow text-primary">Immobilier augmenté par l’intelligence</p>
+            <h1 className="mt-5 text-5xl leading-[1.02] sm:text-7xl lg:text-8xl">
+              NOVARYS ESTATE
             </h1>
-            <p className="animate-rise mt-5 max-w-xl text-base text-background/80 sm:text-lg">
-              Une nouvelle génération de recherche immobilière propulsée par l'intelligence
-              artificielle.
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              Trouvez le bien qui correspond à votre vie. Une expérience immobilière premium,
+              précise et humaine, propulsée par l’IA.
             </p>
-            <div className="animate-rise mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
               <Button asChild size="lg" variant="accent">
                 <Link to="/ai-search">
                   <Sparkles className="size-4" />
@@ -104,7 +92,7 @@ function Landing() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-background/40 bg-transparent text-background hover:bg-background hover:text-foreground"
+                className="rounded-full border-border bg-transparent text-foreground hover:border-primary/50 hover:bg-primary/10"
               >
                 <Link to="/properties">Explorer les biens</Link>
               </Button>
@@ -128,7 +116,7 @@ function Landing() {
           {FEATURES.map((f) => (
             <div
               key={f.title}
-              className="rounded-xl border border-border bg-card p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-lift"
+              className="rounded-xl border border-border bg-card p-7 transition-colors duration-300 hover:border-primary/45"
             >
               <span className="inline-flex size-10 items-center justify-center rounded-lg bg-secondary">
                 <f.icon className="size-5 text-accent" />

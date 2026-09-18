@@ -30,7 +30,7 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10">
+      <div className="border-t border-border">
         <p className="mx-auto max-w-7xl px-5 py-5 text-xs opacity-55 sm:px-8">
           © 2026 Novarys Estate — prototype de démonstration. Données fictives.
         </p>

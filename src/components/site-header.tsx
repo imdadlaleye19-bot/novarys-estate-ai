@@ -29,6 +29,7 @@ export function SiteHeader() {
               key={item.label}
               to={item.to}
               {...("search" in item ? { search: item.search as never } : {})}
+              activeProps={{ className: "text-primary" }}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {item.label}
