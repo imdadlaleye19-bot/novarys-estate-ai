@@ -7,7 +7,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { leadsQuery } from "@/lib/estate-queries";
 import { PIPELINE_STAGES, formatCompact, type Lead, type PipelineStage } from "@/lib/data";
 
-export const Route = createFileRoute("/pipeline")({
+export const Route = createFileRoute("/_authenticated/pipeline")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(leadsQuery());
   },

@@ -10,23 +10,29 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as AdSpendRouteImport } from './routes/ad-spend'
 import { Route as AiSearchRouteImport } from './routes/ai-search'
-import { Route as AnalyticsRouteImport } from './routes/analytics'
-import { Route as AppointmentsRouteImport } from './routes/appointments'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as LeadRouteImport } from './routes/lead'
-import { Route as PipelineRouteImport } from './routes/pipeline'
-import { Route as AdminOverviewRouteImport } from './routes/admin.overview'
-import { Route as LeadsIndexRouteImport } from './routes/leads.index'
-import { Route as LeadsIdRouteImport } from './routes/leads.$id'
+import { Route as AuthenticatedAdSpendRouteImport } from './routes/_authenticated/ad-spend'
+import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
+import { Route as AuthenticatedAppointmentsRouteImport } from './routes/_authenticated/appointments'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedPipelineRouteImport } from './routes/_authenticated/pipeline'
+import { Route as AgencyLoginRouteImport } from './routes/agency.login'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
 import { Route as PropertiesIdRouteImport } from './routes/properties.$id'
+import { Route as AuthenticatedAdminOverviewRouteImport } from './routes/_authenticated/admin.overview'
+import { Route as AuthenticatedLeadsIndexRouteImport } from './routes/_authenticated/leads.index'
+import { Route as AuthenticatedLeadsIdRouteImport } from './routes/_authenticated/leads.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -34,29 +40,9 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdSpendRoute = AdSpendRouteImport.update({
-  id: '/ad-spend',
-  path: '/ad-spend',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AiSearchRoute = AiSearchRouteImport.update({
   id: '/ai-search',
   path: '/ai-search',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AnalyticsRoute = AnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppointmentsRoute = AppointmentsRouteImport.update({
-  id: '/appointments',
-  path: '/appointments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeadRoute = LeadRouteImport.update({
@@ -64,24 +50,35 @@ const LeadRoute = LeadRouteImport.update({
   path: '/lead',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PipelineRoute = PipelineRouteImport.update({
+const AuthenticatedAdSpendRoute = AuthenticatedAdSpendRouteImport.update({
+  id: '/ad-spend',
+  path: '/ad-spend',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAnalyticsRoute = AuthenticatedAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAppointmentsRoute =
+  AuthenticatedAppointmentsRouteImport.update({
+    id: '/appointments',
+    path: '/appointments',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPipelineRoute = AuthenticatedPipelineRouteImport.update({
   id: '/pipeline',
   path: '/pipeline',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AdminOverviewRoute = AdminOverviewRouteImport.update({
-  id: '/admin/overview',
-  path: '/admin/overview',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeadsIndexRoute = LeadsIndexRouteImport.update({
-  id: '/leads/',
-  path: '/leads/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeadsIdRoute = LeadsIdRouteImport.update({
-  id: '/leads/$id',
-  path: '/leads/$id',
+const AgencyLoginRoute = AgencyLoginRouteImport.update({
+  id: '/agency/login',
+  path: '/agency/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PropertiesIndexRoute = PropertiesIndexRouteImport.update({
@@ -94,121 +91,139 @@ const PropertiesIdRoute = PropertiesIdRouteImport.update({
   path: '/properties/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminOverviewRoute =
+  AuthenticatedAdminOverviewRouteImport.update({
+    id: '/admin/overview',
+    path: '/admin/overview',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLeadsIndexRoute = AuthenticatedLeadsIndexRouteImport.update({
+  id: '/leads/',
+  path: '/leads/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLeadsIdRoute = AuthenticatedLeadsIdRouteImport.update({
+  id: '/leads/$id',
+  path: '/leads/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/ad-spend': typeof AdSpendRoute
   '/ai-search': typeof AiSearchRoute
-  '/analytics': typeof AnalyticsRoute
-  '/appointments': typeof AppointmentsRoute
-  '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
-  '/pipeline': typeof PipelineRoute
-  '/admin/overview': typeof AdminOverviewRoute
-  '/leads/$id': typeof LeadsIdRoute
+  '/ad-spend': typeof AuthenticatedAdSpendRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/appointments': typeof AuthenticatedAppointmentsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/pipeline': typeof AuthenticatedPipelineRoute
+  '/agency/login': typeof AgencyLoginRoute
   '/properties/$id': typeof PropertiesIdRoute
-  '/leads/': typeof LeadsIndexRoute
   '/properties/': typeof PropertiesIndexRoute
+  '/admin/overview': typeof AuthenticatedAdminOverviewRoute
+  '/leads/$id': typeof AuthenticatedLeadsIdRoute
+  '/leads/': typeof AuthenticatedLeadsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/ad-spend': typeof AdSpendRoute
   '/ai-search': typeof AiSearchRoute
-  '/analytics': typeof AnalyticsRoute
-  '/appointments': typeof AppointmentsRoute
-  '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
-  '/pipeline': typeof PipelineRoute
-  '/admin/overview': typeof AdminOverviewRoute
-  '/leads/$id': typeof LeadsIdRoute
+  '/ad-spend': typeof AuthenticatedAdSpendRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
+  '/appointments': typeof AuthenticatedAppointmentsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/pipeline': typeof AuthenticatedPipelineRoute
+  '/agency/login': typeof AgencyLoginRoute
   '/properties/$id': typeof PropertiesIdRoute
-  '/leads': typeof LeadsIndexRoute
   '/properties': typeof PropertiesIndexRoute
+  '/admin/overview': typeof AuthenticatedAdminOverviewRoute
+  '/leads/$id': typeof AuthenticatedLeadsIdRoute
+  '/leads': typeof AuthenticatedLeadsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/ad-spend': typeof AdSpendRoute
   '/ai-search': typeof AiSearchRoute
-  '/analytics': typeof AnalyticsRoute
-  '/appointments': typeof AppointmentsRoute
-  '/dashboard': typeof DashboardRoute
   '/lead': typeof LeadRoute
-  '/pipeline': typeof PipelineRoute
-  '/admin/overview': typeof AdminOverviewRoute
-  '/leads/$id': typeof LeadsIdRoute
+  '/_authenticated/ad-spend': typeof AuthenticatedAdSpendRoute
+  '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
+  '/_authenticated/appointments': typeof AuthenticatedAppointmentsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/pipeline': typeof AuthenticatedPipelineRoute
+  '/agency/login': typeof AgencyLoginRoute
   '/properties/$id': typeof PropertiesIdRoute
-  '/leads/': typeof LeadsIndexRoute
   '/properties/': typeof PropertiesIndexRoute
+  '/_authenticated/admin/overview': typeof AuthenticatedAdminOverviewRoute
+  '/_authenticated/leads/$id': typeof AuthenticatedLeadsIdRoute
+  '/_authenticated/leads/': typeof AuthenticatedLeadsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/ad-spend'
     | '/ai-search'
+    | '/lead'
+    | '/ad-spend'
     | '/analytics'
     | '/appointments'
     | '/dashboard'
-    | '/lead'
     | '/pipeline'
+    | '/agency/login'
+    | '/properties/$id'
+    | '/properties/'
     | '/admin/overview'
     | '/leads/$id'
-    | '/properties/$id'
     | '/leads/'
-    | '/properties/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/ad-spend'
     | '/ai-search'
+    | '/lead'
+    | '/ad-spend'
     | '/analytics'
     | '/appointments'
     | '/dashboard'
-    | '/lead'
     | '/pipeline'
+    | '/agency/login'
+    | '/properties/$id'
+    | '/properties'
     | '/admin/overview'
     | '/leads/$id'
-    | '/properties/$id'
     | '/leads'
-    | '/properties'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
-    | '/ad-spend'
     | '/ai-search'
-    | '/analytics'
-    | '/appointments'
-    | '/dashboard'
     | '/lead'
-    | '/pipeline'
-    | '/admin/overview'
-    | '/leads/$id'
+    | '/_authenticated/ad-spend'
+    | '/_authenticated/analytics'
+    | '/_authenticated/appointments'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/pipeline'
+    | '/agency/login'
     | '/properties/$id'
-    | '/leads/'
     | '/properties/'
+    | '/_authenticated/admin/overview'
+    | '/_authenticated/leads/$id'
+    | '/_authenticated/leads/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
-  AdSpendRoute: typeof AdSpendRoute
   AiSearchRoute: typeof AiSearchRoute
-  AnalyticsRoute: typeof AnalyticsRoute
-  AppointmentsRoute: typeof AppointmentsRoute
-  DashboardRoute: typeof DashboardRoute
   LeadRoute: typeof LeadRoute
-  PipelineRoute: typeof PipelineRoute
-  AdminOverviewRoute: typeof AdminOverviewRoute
-  LeadsIdRoute: typeof LeadsIdRoute
+  AgencyLoginRoute: typeof AgencyLoginRoute
   PropertiesIdRoute: typeof PropertiesIdRoute
-  LeadsIndexRoute: typeof LeadsIndexRoute
   PropertiesIndexRoute: typeof PropertiesIndexRoute
 }
 
@@ -221,18 +236,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ad-spend': {
-      id: '/ad-spend'
-      path: '/ad-spend'
-      fullPath: '/ad-spend'
-      preLoaderRoute: typeof AdSpendRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-search': {
@@ -242,27 +257,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/analytics': {
-      id: '/analytics'
-      path: '/analytics'
-      fullPath: '/analytics'
-      preLoaderRoute: typeof AnalyticsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/appointments': {
-      id: '/appointments'
-      path: '/appointments'
-      fullPath: '/appointments'
-      preLoaderRoute: typeof AppointmentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/lead': {
       id: '/lead'
       path: '/lead'
@@ -270,32 +264,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeadRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pipeline': {
-      id: '/pipeline'
+    '/_authenticated/ad-spend': {
+      id: '/_authenticated/ad-spend'
+      path: '/ad-spend'
+      fullPath: '/ad-spend'
+      preLoaderRoute: typeof AuthenticatedAdSpendRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/analytics': {
+      id: '/_authenticated/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AuthenticatedAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/appointments': {
+      id: '/_authenticated/appointments'
+      path: '/appointments'
+      fullPath: '/appointments'
+      preLoaderRoute: typeof AuthenticatedAppointmentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pipeline': {
+      id: '/_authenticated/pipeline'
       path: '/pipeline'
       fullPath: '/pipeline'
-      preLoaderRoute: typeof PipelineRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedPipelineRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/admin/overview': {
-      id: '/admin/overview'
-      path: '/admin/overview'
-      fullPath: '/admin/overview'
-      preLoaderRoute: typeof AdminOverviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leads/': {
-      id: '/leads/'
-      path: '/leads'
-      fullPath: '/leads/'
-      preLoaderRoute: typeof LeadsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leads/$id': {
-      id: '/leads/$id'
-      path: '/leads/$id'
-      fullPath: '/leads/$id'
-      preLoaderRoute: typeof LeadsIdRouteImport
+    '/agency/login': {
+      id: '/agency/login'
+      path: '/agency/login'
+      fullPath: '/agency/login'
+      preLoaderRoute: typeof AgencyLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/properties/': {
@@ -312,23 +320,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PropertiesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/overview': {
+      id: '/_authenticated/admin/overview'
+      path: '/admin/overview'
+      fullPath: '/admin/overview'
+      preLoaderRoute: typeof AuthenticatedAdminOverviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/leads/': {
+      id: '/_authenticated/leads/'
+      path: '/leads'
+      fullPath: '/leads/'
+      preLoaderRoute: typeof AuthenticatedLeadsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/leads/$id': {
+      id: '/_authenticated/leads/$id'
+      path: '/leads/$id'
+      fullPath: '/leads/$id'
+      preLoaderRoute: typeof AuthenticatedLeadsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdSpendRoute: typeof AuthenticatedAdSpendRoute
+  AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
+  AuthenticatedAppointmentsRoute: typeof AuthenticatedAppointmentsRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedPipelineRoute: typeof AuthenticatedPipelineRoute
+  AuthenticatedAdminOverviewRoute: typeof AuthenticatedAdminOverviewRoute
+  AuthenticatedLeadsIdRoute: typeof AuthenticatedLeadsIdRoute
+  AuthenticatedLeadsIndexRoute: typeof AuthenticatedLeadsIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdSpendRoute: AuthenticatedAdSpendRoute,
+  AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
+  AuthenticatedAppointmentsRoute: AuthenticatedAppointmentsRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedPipelineRoute: AuthenticatedPipelineRoute,
+  AuthenticatedAdminOverviewRoute: AuthenticatedAdminOverviewRoute,
+  AuthenticatedLeadsIdRoute: AuthenticatedLeadsIdRoute,
+  AuthenticatedLeadsIndexRoute: AuthenticatedLeadsIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
-  AdSpendRoute: AdSpendRoute,
   AiSearchRoute: AiSearchRoute,
-  AnalyticsRoute: AnalyticsRoute,
-  AppointmentsRoute: AppointmentsRoute,
-  DashboardRoute: DashboardRoute,
   LeadRoute: LeadRoute,
-  PipelineRoute: PipelineRoute,
-  AdminOverviewRoute: AdminOverviewRoute,
-  LeadsIdRoute: LeadsIdRoute,
+  AgencyLoginRoute: AgencyLoginRoute,
   PropertiesIdRoute: PropertiesIdRoute,
-  LeadsIndexRoute: LeadsIndexRoute,
   PropertiesIndexRoute: PropertiesIndexRoute,
 }
 export const routeTree = rootRouteImport

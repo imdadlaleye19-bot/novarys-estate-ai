@@ -8,7 +8,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { leadsQuery } from "@/lib/estate-queries";
 import { type Lead, type LeadStatus } from "@/lib/data";
 
-export const Route = createFileRoute("/leads/")({
+export const Route = createFileRoute("/_authenticated/leads/")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(leadsQuery());
   },

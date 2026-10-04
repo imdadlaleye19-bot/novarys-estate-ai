@@ -16,7 +16,7 @@ import {
   YAxis,
 } from "recharts";
 import { AppShell } from "@/components/app-shell";
-import { Panel, tooltipStyle } from "@/routes/dashboard";
+import { Panel, tooltipStyle } from "@/routes/_authenticated/dashboard";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { leadsQuery, propertiesQuery } from "@/lib/estate-queries";
 import {
@@ -30,7 +30,7 @@ import {
 } from "@/lib/insights";
 import { chartColors, chartPalette, trafficData, trafficSources } from "@/lib/data";
 
-export const Route = createFileRoute("/analytics")({
+export const Route = createFileRoute("/_authenticated/analytics")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(leadsQuery()),

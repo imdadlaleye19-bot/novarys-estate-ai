@@ -1,16 +1,18 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { useState, type ReactNode } from "react";
 import {
   BarChart3,
   Building2,
   CalendarCheck,
   Globe,
+  LogOut,
   KanbanSquare,
   LayoutDashboard,
   Megaphone,
   Menu,
   Settings,
-  Sparkles,
   Users,
   X,
 } from "lucide-react";
@@ -38,6 +40,14 @@ export function AppShell({
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/agency/login", replace: true });
+  }
 
   return (
     <div className="min-h-screen bg-background lg:flex">
@@ -92,14 +102,14 @@ export function AppShell({
               Vue globale NOVARYS
             </Link>
           </div>
-          <div className="rounded-lg border border-sidebar-border bg-sidebar-accent p-4">
-            <p className="flex items-center gap-2 text-xs font-semibold text-sidebar-primary">
-              <Sparkles className="size-3.5" /> Demo Mode
-            </p>
-            <p className="mt-1.5 text-xs opacity-70">
-              demo@novarys.com — données fictives de démonstration.
-            </p>
-          </div>
+          <button
+            type="button"
+            onClick={signOut}
+            className="flex w-full items-center gap-3 rounded-md border border-sidebar-border px-3 py-2 text-sm opacity-85 transition-colors hover:bg-sidebar-accent hover:opacity-100"
+          >
+            <LogOut className="size-4" />
+            Se déconnecter
+          </button>
         </div>
       </aside>
 

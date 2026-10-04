@@ -6,7 +6,7 @@ import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PropertyCard } from "@/components/property-card";
-import { StatusBadge } from "@/routes/leads.index";
+import { StatusBadge } from "@/routes/_authenticated/leads.index";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
@@ -23,7 +23,7 @@ import {
   formatSlot,
 } from "@/components/appointment-actions";
 
-export const Route = createFileRoute("/leads/$id")({
+export const Route = createFileRoute("/_authenticated/leads/$id")({
   loader: async ({ params, context }) => {
     const [lead] = await Promise.all([
       context.queryClient.ensureQueryData(leadQuery(params.id)),
