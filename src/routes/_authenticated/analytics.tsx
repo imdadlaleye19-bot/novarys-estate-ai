@@ -16,7 +16,7 @@ import {
   YAxis,
 } from "recharts";
 import { AppShell } from "@/components/app-shell";
-import { Panel, tooltipStyle } from "@/routes/dashboard";
+import { Panel, tooltipStyle } from "@/routes/_authenticated/dashboard";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { leadsQuery, propertiesQuery } from "@/lib/estate-queries";
 import {
