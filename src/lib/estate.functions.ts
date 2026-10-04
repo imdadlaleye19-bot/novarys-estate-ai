@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 function publicClient() {
   return createClient<Database>(
@@ -44,8 +45,10 @@ export const getPropertyById = createServerFn({ method: "GET" })
  * Le prototype n'a pas encore d'écran de connexion : la lecture CRM passe donc
  * par le serveur. À remplacer par `requireSupabaseAuth` dès l'ajout de l'auth.
  */
-export const listLeads = createServerFn({ method: "GET" }).handler(async () => {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+export const listLeads = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+  const supabaseAdmin = context.supabase;
   const { data, error } = await supabaseAdmin
     .from("leads")
     .select(LEAD_COLUMNS)
@@ -56,8 +59,9 @@ export const listLeads = createServerFn({ method: "GET" }).handler(async () => {
 
 export const getLeadDetail = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ id: z.string() }).parse(input))
-  .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ data, context }) => {
+    const supabaseAdmin = context.supabase;
     const [leadRes, timelineRes] = await Promise.all([
       supabaseAdmin.from("leads").select(LEAD_COLUMNS).eq("id", data.id).maybeSingle(),
       supabaseAdmin
@@ -106,8 +110,9 @@ const closeLeadSchema = z.object({
 
 export const closeLead = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => closeLeadSchema.parse(input))
-  .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ data, context }) => {
+    const supabaseAdmin = context.supabase;
     const { error } = await supabaseAdmin
       .from("leads")
       .update({
@@ -124,8 +129,10 @@ export const closeLead = createServerFn({ method: "POST" })
 
 const AD_SPEND_COLUMNS = "id,spend_date,amount,source,notes,created_at";
 
-export const listAdSpend = createServerFn({ method: "GET" }).handler(async () => {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+export const listAdSpend = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+  const supabaseAdmin = context.supabase;
   const { data, error } = await supabaseAdmin
     .from("ad_spend")
     .select(AD_SPEND_COLUMNS)
@@ -145,9 +152,12 @@ export type NewAdSpendInput = z.infer<typeof newAdSpendSchema>;
 
 export const createAdSpend = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => newAdSpendSchema.parse(input))
-  .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin.from("ad_spend").insert(data);
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ data, context }) => {
+    const supabaseAdmin = context.supabase;
+    const { error } = await supabaseAdmin
+      .from("ad_spend")
+      .insert({ ...data, agency_id: await resolveAgencyId(supabaseAdmin) });
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -157,8 +167,10 @@ export const createAdSpend = createServerFn({ method: "POST" })
 const APPOINTMENT_COLUMNS =
   "id,lead_id,scheduled_at,duration_minutes,status,notes,created_at";
 
-export const listAppointments = createServerFn({ method: "GET" }).handler(async () => {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+export const listAppointments = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+  const supabaseAdmin = context.supabase;
   const { data, error } = await supabaseAdmin
     .from("appointments")
     .select(APPOINTMENT_COLUMNS)
@@ -186,11 +198,18 @@ export type NewAppointmentInput = z.infer<typeof newAppointmentSchema>;
 
 export const createAppointment = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => newAppointmentSchema.parse(input))
-  .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ data, context }) => {
+    const supabaseAdmin = context.supabase;
+    const { data: lead } = await supabaseAdmin
+      .from("leads")
+      .select("agency_id")
+      .eq("id", data.lead_id)
+      .maybeSingle();
+    if (!lead) throw new Error("Prospect introuvable");
     const { error } = await supabaseAdmin
       .from("appointments")
-      .insert({ ...data, status: "scheduled" });
+      .insert({ ...data, status: "scheduled", agency_id: lead?.agency_id ?? null });
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -202,8 +221,9 @@ const updateAppointmentSchema = z.object({
 
 export const updateAppointmentStatus = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => updateAppointmentSchema.parse(input))
-  .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ data, context }) => {
+    const supabaseAdmin = context.supabase;
     const { error } = await supabaseAdmin
       .from("appointments")
       .update({ status: data.status })
@@ -226,8 +246,12 @@ export interface AgencyOverviewRow {
   revenue: number;
 }
 
-export const listAgencyOverview = createServerFn({ method: "GET" }).handler(async () => {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+export const listAgencyOverview = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+  const supabaseAdmin = context.supabase;
+  const { data: isAdmin } = await supabaseAdmin.rpc("is_novarys_admin");
+  if (!isAdmin) throw new Error("Accès réservé à l'équipe NOVARYS");
   const [agenciesRes, leadsRes, spendRes, apptRes] = await Promise.all([
     supabaseAdmin.from("agencies").select("id,name").order("name"),
     supabaseAdmin.from("leads").select("agency_id,closed_result,sale_amount"),
@@ -265,3 +289,38 @@ export const listAgencyOverview = createServerFn({ method: "GET" }).handler(asyn
 
   return rows;
 });
+
+/* ------------------------------ Accès agence ------------------------------ */
+
+type Sb = ReturnType<typeof publicClient>;
+
+async function resolveAgencyId(sb: Sb): Promise<string> {
+  const { data } = await sb.from("agencies").select("id").order("created_at").limit(1);
+  // RLS sur agency_users limite déjà aux agences du compte (ou toutes pour l'admin)
+  const { data: links } = await sb.from("agency_users").select("agency_id").limit(1);
+  const id = links?.[0]?.agency_id ?? data?.[0]?.id;
+  if (!id) throw new Error("Aucune agence associée à ce compte");
+  return id;
+}
+
+export const getMyAccess = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const sb = context.supabase;
+    const [{ data: isAdmin }, { data: links }] = await Promise.all([
+      sb.rpc("is_novarys_admin"),
+      sb.from("agency_users").select("agency_id").eq("user_id", context.userId),
+    ]);
+    const agencyIds = (links ?? []).map((l) => l.agency_id);
+    let agencyNames: string[] = [];
+    if (agencyIds.length) {
+      const { data } = await sb.from("agencies").select("name").in("id", agencyIds);
+      agencyNames = (data ?? []).map((a) => a.name);
+    }
+    return {
+      email: (context.claims as { email?: string }).email ?? "",
+      isAdmin: Boolean(isAdmin),
+      agencyIds,
+      agencyNames,
+    };
+  });

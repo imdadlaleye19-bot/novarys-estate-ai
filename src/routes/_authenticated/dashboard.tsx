@@ -30,7 +30,7 @@ import {
   trafficSources,
 } from "@/lib/data";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(leadsQuery()),

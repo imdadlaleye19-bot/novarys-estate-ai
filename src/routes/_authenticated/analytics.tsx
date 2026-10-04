@@ -30,7 +30,7 @@ import {
 } from "@/lib/insights";
 import { chartColors, chartPalette, trafficData, trafficSources } from "@/lib/data";
 
-export const Route = createFileRoute("/analytics")({
+export const Route = createFileRoute("/_authenticated/analytics")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(leadsQuery()),

@@ -23,7 +23,7 @@ import {
   formatSlot,
 } from "@/components/appointment-actions";
 
-export const Route = createFileRoute("/leads/$id")({
+export const Route = createFileRoute("/_authenticated/leads/$id")({
   loader: async ({ params, context }) => {
     const [lead] = await Promise.all([
       context.queryClient.ensureQueryData(leadQuery(params.id)),

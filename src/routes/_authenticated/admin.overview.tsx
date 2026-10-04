@@ -5,7 +5,7 @@ import { AppShell } from "@/components/app-shell";
 import { agencyOverviewQuery } from "@/lib/estate-queries";
 import { formatCompact } from "@/lib/data";
 
-export const Route = createFileRoute("/admin/overview")({
+export const Route = createFileRoute("/_authenticated/admin/overview")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(agencyOverviewQuery());
   },

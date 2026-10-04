@@ -17,7 +17,7 @@ import {
 } from "@/lib/estate-queries";
 import { updateAppointmentStatus } from "@/lib/estate.functions";
 
-export const Route = createFileRoute("/appointments")({
+export const Route = createFileRoute("/_authenticated/appointments")({
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureQueryData(appointmentsQuery()),

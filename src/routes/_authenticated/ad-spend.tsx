@@ -11,7 +11,7 @@ import { adSpendQuery } from "@/lib/estate-queries";
 import { createAdSpend } from "@/lib/estate.functions";
 import { formatCompact } from "@/lib/data";
 
-export const Route = createFileRoute("/ad-spend")({
+export const Route = createFileRoute("/_authenticated/ad-spend")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(adSpendQuery());
   },
