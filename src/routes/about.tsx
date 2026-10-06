@@ -6,13 +6,15 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "À propos — Novarys Estate" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "À propos — NOVARYS IMMO" },
       {
         name: "description",
         content:
-          "Novarys Estate équipe les agences immobilières d'Abidjan, Dakar et Cotonou d'une plateforme de recherche et de qualification pilotée par l'IA.",
+          "NOVARYS IMMO équipe les agences immobilières d'Abidjan, Dakar et Cotonou d'une plateforme de recherche et de qualification pilotée par l'IA.",
       },
-      { property: "og:title", content: "À propos — Novarys Estate" },
+      { property: "og:title", content: "À propos — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "La plateforme IA des agences immobilières premium d'Afrique francophone.",
@@ -47,7 +49,7 @@ function About() {
           Transform your real estate business with AI.
         </h1>
         <p className="mt-6 text-lg text-muted-foreground">
-          Novarys Estate est une plateforme SaaS conçue pour les agences immobilières, promoteurs et
+          NOVARYS IMMO est une plateforme SaaS conçue pour les agences immobilières, promoteurs et
           gestionnaires de biens d'Afrique francophone. Elle réunit un catalogue en ligne, un
           assistant de recherche intelligent et un CRM commercial dans une seule expérience.
         </p>

@@ -14,13 +14,15 @@ export const Route = createFileRoute("/_authenticated/leads/")({
   },
   head: () => ({
     meta: [
-      { title: "Prospects — Novarys Estate CRM" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "Prospects — NOVARYS IMMO CRM" },
       {
         name: "description",
         content:
           "Gestion CRM des prospects immobiliers : score IA, budget, zone, statut et date de création, avec recherche, filtres et tri.",
       },
-      { property: "og:title", content: "AI Leads — Novarys Estate" },
+      { property: "og:title", content: "AI Leads — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Tous vos prospects qualifiés automatiquement, dans une seule table.",

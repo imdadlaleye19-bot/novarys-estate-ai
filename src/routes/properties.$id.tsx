@@ -34,16 +34,20 @@ export const Route = createFileRoute("/properties/$id")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Bien introuvable — Novarys Estate" }, { name: "robots", content: "noindex" }],
+        meta: [
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },{ title: "Bien introuvable — NOVARYS IMMO" }, { name: "description", content: "Ce bien est introuvable sur NOVARYS IMMO." }, { property: "og:title", content: "Bien introuvable — NOVARYS IMMO" }, { property: "og:description", content: "Ce bien est introuvable sur NOVARYS IMMO." }, { name: "robots", content: "noindex" }],
       };
     }
     const { property } = loaderData;
     const description = `${property.name} — ${property.surface} m² à ${property.location}. ${formatPrice(property)}.`;
     return {
       meta: [
-        { title: `${property.name} — Novarys Estate` },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { title: `${property.name} — NOVARYS IMMO` },
         { name: "description", content: description },
-        { property: "og:title", content: `${property.name} — Novarys Estate` },
+        { property: "og:title", content: `${property.name} — NOVARYS IMMO` },
         { property: "og:description", content: description },
       ],
     };

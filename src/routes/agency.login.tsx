@@ -9,10 +9,10 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/agency/login")({
   head: () => ({
     meta: [
-      { title: "Connexion agence — NOVARYS ESTATE" },
-      { name: "description", content: "Espace sécurisé des agences partenaires NOVARYS ESTATE." },
-      { property: "og:title", content: "Connexion agence — NOVARYS ESTATE" },
-      { property: "og:description", content: "Espace sécurisé des agences partenaires NOVARYS ESTATE." },
+      { title: "Connexion agence — NOVARYS IMMO" },
+      { name: "description", content: "Espace sécurisé des agences partenaires NOVARYS IMMO." },
+      { property: "og:title", content: "Connexion agence — NOVARYS IMMO" },
+      { property: "og:description", content: "Espace sécurisé des agences partenaires NOVARYS IMMO." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -44,7 +44,7 @@ function LoginPage() {
       <div className="relative w-full max-w-sm">
         <Link to="/" className="mb-8 flex items-baseline justify-center gap-2">
           <span className="font-display text-xl">NOVARYS</span>
-          <span className="eyebrow opacity-60">Estate</span>
+          <span className="eyebrow opacity-60">IMMO</span>
         </Link>
         <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-border bg-card p-8">
           <div>

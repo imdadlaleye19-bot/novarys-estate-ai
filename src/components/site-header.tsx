@@ -20,7 +20,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
         <Link to="/" className="flex items-baseline gap-2">
           <span className="font-display text-lg tracking-tight">NOVARYS</span>
-          <span className="eyebrow text-muted-foreground">Estate</span>
+          <span className="eyebrow text-muted-foreground">IMMO</span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">

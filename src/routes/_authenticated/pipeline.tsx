@@ -13,13 +13,15 @@ export const Route = createFileRoute("/_authenticated/pipeline")({
   },
   head: () => ({
     meta: [
-      { title: "Pipeline commercial — Novarys Estate" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "Pipeline commercial — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Kanban commercial : déplacez vos prospects de la qualification à la signature, avec score IA et budget sur chaque carte.",
       },
-      { property: "og:title", content: "Pipeline commercial — Novarys Estate" },
+      { property: "og:title", content: "Pipeline commercial — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Suivi visuel des prospects immobiliers, de la qualification à la vente.",

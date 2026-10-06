@@ -22,13 +22,15 @@ import { getWhatsAppLink, LOCATIONS, PROPERTY_TYPES } from "@/lib/data";
 export const Route = createFileRoute("/lead")({
   head: () => ({
     meta: [
-      { title: "Qualifier mon projet — Novarys Estate" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "Qualifier mon projet — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Décrivez votre projet immobilier en une minute : un conseiller Novarys vous rappelle avec une sélection de biens adaptée.",
       },
-      { property: "og:title", content: "Let's find your property — Novarys Estate" },
+      { property: "og:title", content: "Let's find your property — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Formulaire de qualification intelligent pour acheteurs, locataires et investisseurs.",
@@ -73,7 +75,7 @@ function LeadPage() {
   const ready = form.name && form.phone && form.type && form.zone;
 
   const recap = () =>
-    `Bonjour Novarys Estate, nouvelle demande depuis le site.\nNom : ${form.name}\nTéléphone : ${form.phone}\nEmail : ${form.email || "non précisé"}\nProjet : ${form.type || "non précisé"} à ${form.zone || "non précisé"}\nBudget : ${form.budget || "non précisé"}\nChambres : ${form.bedrooms || "non précisé"}\nÉchéance : ${form.timing || "non précisée"}\nVisite prochaine : ${form.visit || "non précisé"}\nLead score : ${score}/100`;
+    `Bonjour NOVARYS IMMO, nouvelle demande depuis le site.\nNom : ${form.name}\nTéléphone : ${form.phone}\nEmail : ${form.email || "non précisé"}\nProjet : ${form.type || "non précisé"} à ${form.zone || "non précisé"}\nBudget : ${form.budget || "non précisé"}\nChambres : ${form.bedrooms || "non précisé"}\nÉchéance : ${form.timing || "non précisée"}\nVisite prochaine : ${form.visit || "non précisé"}\nLead score : ${score}/100`;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();

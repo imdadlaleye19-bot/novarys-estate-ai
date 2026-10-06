@@ -27,16 +27,18 @@ export const Route = createFileRoute("/properties/")({
   },
   head: () => ({
     meta: [
-      { title: "Catalogue immobilier — Novarys Estate" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "Catalogue immobilier — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Villas, appartements, bureaux et terrains à Cocody, Riviera, Marcory, Plateau et Bingerville. Filtrez par budget, type et nombre de chambres.",
       },
-      { property: "og:title", content: "Explore our properties — Novarys Estate" },
+      { property: "og:title", content: "Explore our properties — NOVARYS IMMO" },
       {
         property: "og:description",
-        content: "Le catalogue premium de Novarys Estate à Abidjan et en Afrique francophone.",
+        content: "Le catalogue premium de NOVARYS IMMO à Abidjan et en Afrique francophone.",
       },
     ],
   }),
