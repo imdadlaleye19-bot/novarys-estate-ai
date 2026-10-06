@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_authenticated/admin/overview")({
       { property: "og:title", content: "Vue globale NOVARYS — toutes les agences" },
       {
         property: "og:description",
-        content: "Performance comparée de toutes les agences Novarys Estate.",
+        content: "Performance comparée de toutes les agences NOVARYS IMMO.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

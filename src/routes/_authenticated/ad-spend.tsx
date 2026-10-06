@@ -17,13 +17,13 @@ export const Route = createFileRoute("/_authenticated/ad-spend")({
   },
   head: () => ({
     meta: [
-      { title: "Dépenses publicitaires — Novarys Estate" },
+      { title: "Dépenses publicitaires — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Suivi des investissements publicitaires de l'agence : montant, source, date et total du mois en cours.",
       },
-      { property: "og:title", content: "Dépenses publicitaires — Novarys Estate" },
+      { property: "og:title", content: "Dépenses publicitaires — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Enregistrez vos budgets média et mesurez le coût d'acquisition de vos prospects.",

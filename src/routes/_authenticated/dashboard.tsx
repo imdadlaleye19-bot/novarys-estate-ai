@@ -41,13 +41,15 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   },
   head: () => ({
     meta: [
-      { title: "Dashboard agence — Novarys Estate" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "Dashboard agence — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Vue d'ensemble de l'activité commerciale : visiteurs, nouveaux prospects, qualification IA, visites programmées et négociations en cours.",
       },
-      { property: "og:title", content: "Dashboard agence — Novarys Estate" },
+      { property: "og:title", content: "Dashboard agence — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Pilotage complet de l'activité immobilière assistée par l'IA.",

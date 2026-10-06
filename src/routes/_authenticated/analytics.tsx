@@ -39,13 +39,15 @@ export const Route = createFileRoute("/_authenticated/analytics")({
   },
   head: () => ({
     meta: [
-      { title: "Analytics — Novarys Estate" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "Analytics — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Performances commerciales : visiteurs, leads, qualification, rendez-vous, taux de conversion, biens et zones les plus demandés.",
       },
-      { property: "og:title", content: "Analytics — Novarys Estate" },
+      { property: "og:title", content: "Analytics — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Analyse complète de la performance commerciale d'une agence immobilière.",

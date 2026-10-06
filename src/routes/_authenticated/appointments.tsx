@@ -26,13 +26,13 @@ export const Route = createFileRoute("/_authenticated/appointments")({
   },
   head: () => ({
     meta: [
-      { title: "Rendez-vous — Novarys Estate" },
+      { title: "Rendez-vous — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Agenda des rendez-vous prospects de l'agence : aujourd'hui, cette semaine et à venir, avec suivi des statuts.",
       },
-      { property: "og:title", content: "Rendez-vous — Novarys Estate" },
+      { property: "og:title", content: "Rendez-vous — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Planifiez et suivez les visites et rendez-vous de vos prospects.",

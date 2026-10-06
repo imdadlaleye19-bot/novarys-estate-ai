@@ -60,7 +60,7 @@ export function AppShell({
         <div className="flex h-16 items-center justify-between px-5">
           <Link to="/" className="flex items-baseline gap-2">
             <span className="font-display text-base text-sidebar-accent-foreground">NOVARYS</span>
-            <span className="eyebrow opacity-60">Estate</span>
+            <span className="eyebrow opacity-60">IMMO</span>
           </Link>
           <button
             type="button"

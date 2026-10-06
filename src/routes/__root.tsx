@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Novarys Estate — Transform your real estate business with AI." },
+      { title: "NOVARYS IMMO — Transform your real estate business with AI." },
       {
         name: "description",
         content:
           "Plateforme immobilière IA pour agences premium d'Afrique francophone : catalogue, assistant de recherche, qualification des prospects et CRM.",
       },
       { name: "author", content: "Novarys" },
-      { property: "og:title", content: "Novarys Estate" },
+      { property: "og:title", content: "NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Transform your real estate business with AI.",

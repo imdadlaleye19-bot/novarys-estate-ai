@@ -7,7 +7,7 @@ export function SiteFooter() {
         <div>
           <div className="flex items-baseline gap-2">
             <span className="font-display text-lg">NOVARYS</span>
-            <span className="eyebrow opacity-70">Estate</span>
+            <span className="eyebrow opacity-70">IMMO</span>
           </div>
           <p className="mt-3 max-w-sm text-sm opacity-70">
             Transform your real estate business with AI. Abidjan · Dakar · Cotonou.
@@ -32,7 +32,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border">
         <p className="mx-auto max-w-7xl px-5 py-5 text-xs opacity-55 sm:px-8">
-          © 2026 Novarys Estate — prototype de démonstration. Données fictives.
+          © 2026 NOVARYS IMMO — prototype de démonstration. Données fictives.
         </p>
       </div>
     </footer>

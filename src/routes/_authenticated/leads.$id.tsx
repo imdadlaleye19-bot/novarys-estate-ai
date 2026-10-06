@@ -36,16 +36,20 @@ export const Route = createFileRoute("/_authenticated/leads/$id")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Prospect introuvable — Novarys Estate" }, { name: "robots", content: "noindex" }],
+        meta: [
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },{ title: "Prospect introuvable — NOVARYS IMMO" }, { name: "description", content: "Ce prospect est introuvable sur NOVARYS IMMO." }, { property: "og:title", content: "Prospect introuvable — NOVARYS IMMO" }, { property: "og:description", content: "Ce prospect est introuvable sur NOVARYS IMMO." }, { name: "robots", content: "noindex" }],
       };
     }
     const { lead } = loaderData;
     const description = `${lead.name} — ${lead.project} ${lead.propertyType} à ${lead.location}, score IA ${lead.score}/100.`;
     return {
       meta: [
-        { title: `${lead.name} — Prospect Novarys Estate` },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { title: `${lead.name} — Prospect NOVARYS IMMO` },
         { name: "description", content: description },
-        { property: "og:title", content: `${lead.name} — Prospect Novarys Estate` },
+        { property: "og:title", content: `${lead.name} — Prospect NOVARYS IMMO` },
         { property: "og:description", content: description },
       ],
     };
@@ -196,7 +200,7 @@ function LeadDetail() {
               <Button asChild variant="accent">
                 <a
                   href={getWhatsAppLink(
-                    `Bonjour Novarys Estate, je souhaite échanger au sujet du prospect ${lead.name} (${lead.project} à ${lead.location}).`
+                    `Bonjour NOVARYS IMMO, je souhaite échanger au sujet du prospect ${lead.name} (${lead.project} à ${lead.location}).`
                   )}
                   target="_blank"
                   rel="noopener noreferrer"

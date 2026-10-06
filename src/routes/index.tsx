@@ -10,13 +10,15 @@ import { propertiesQuery } from "@/lib/estate-queries";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Novarys Estate — L'immobilier premium propulsé par l'IA" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "NOVARYS IMMO — L'immobilier premium propulsé par l'IA" },
       {
         name: "description",
         content:
-          "Novarys Estate aide les agences immobilières d'Afrique francophone à présenter leurs biens, qualifier leurs prospects avec l'IA et suivre leurs ventes.",
+          "NOVARYS IMMO aide les agences immobilières d'Afrique francophone à présenter leurs biens, qualifier leurs prospects avec l'IA et suivre leurs ventes.",
       },
-      { property: "og:title", content: "Novarys Estate — Transform your real estate business with AI" },
+      { property: "og:title", content: "NOVARYS IMMO — Transform your real estate business with AI" },
       {
         property: "og:description",
         content:
@@ -75,7 +77,7 @@ function Landing() {
           <div className="relative z-10 flex max-w-4xl flex-col items-center">
             <p className="eyebrow text-primary">Immobilier augmenté par l’intelligence</p>
             <h1 className="mt-5 text-5xl leading-[1.02] sm:text-7xl lg:text-8xl">
-              NOVARYS ESTATE
+              NOVARYS IMMO
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Trouvez le bien qui correspond à votre vie. Une expérience immobilière premium,
@@ -184,7 +186,7 @@ function Landing() {
             <h2 className="text-3xl sm:text-5xl">Transformez votre agence avec l'IA.</h2>
             <p className="mt-4 opacity-75">
               Catalogue intelligent, qualification automatique et pipeline commercial : découvrez la
-              démonstration complète de Novarys Estate.
+              démonstration complète de NOVARYS IMMO.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" variant="accent">

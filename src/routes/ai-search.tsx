@@ -11,13 +11,15 @@ import { getWhatsAppLink, properties, type Property } from "@/lib/data";
 export const Route = createFileRoute("/ai-search")({
   head: () => ({
     meta: [
-      { title: "Assistant IA immobilier — Novarys Estate" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      { title: "Assistant IA immobilier — NOVARYS IMMO" },
       {
         name: "description",
         content:
           "Répondez à six questions et l'assistant Novarys vous propose les biens les plus adaptés à votre projet, avec un score de compatibilité.",
       },
-      { property: "og:title", content: "Find your perfect property — Novarys Estate" },
+      { property: "og:title", content: "Find your perfect property — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Recherche immobilière conversationnelle propulsée par l'intelligence artificielle.",
@@ -238,7 +240,7 @@ function AiSearch() {
                 <Button asChild variant="accent">
                   <a
                     href={getWhatsAppLink(
-                      `Bonjour Novarys Estate, j'ai utilisé l'assistant IA et souhaite recevoir les fiches de : ${results
+                      `Bonjour NOVARYS IMMO, j'ai utilisé l'assistant IA et souhaite recevoir les fiches de : ${results
                         .map((r) => r.property.name)
                         .join(", ")}.\nMerci d'organiser une visite.`
                     )}
