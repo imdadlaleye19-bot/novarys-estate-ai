@@ -97,9 +97,33 @@ export type NewLeadInput = z.infer<typeof newLeadSchema>;
 export const createLead = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => newLeadSchema.parse(input))
   .handler(async ({ data }) => {
-    const { error } = await publicClient().from("leads").insert(data);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    // Formulaire public : rattaché à l'agence de démo (première agence créée)
+    const { data: agency } = await supabaseAdmin
+      .from("agencies")
+      .select("id,name")
+      .order("created_at")
+      .limit(1)
+      .maybeSingle();
+    const { error } = await supabaseAdmin
+      .from("leads")
+      .insert({ ...data, agency_id: agency?.id ?? null });
     if (error) throw new Error(error.message);
-    return { ok: true };
+
+    let emailSent = false;
+    if (data.email) {
+      const { sendLeadConfirmation } = await import("./lead-email.server");
+      const r = await sendLeadConfirmation({
+        to: data.email,
+        name: data.name,
+        propertyType: data.property_type,
+        location: data.location,
+        budgetLabel: data.budget_label,
+        agencyName: agency?.name ?? "NOVARYS IMMO",
+      });
+      emailSent = r.sent;
+    }
+    return { ok: true, emailSent };
   });
 
 const closeLeadSchema = z.object({
