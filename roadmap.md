@@ -7,5 +7,5 @@
 - [x] Vérifier les écrans principaux sur ordinateur et mobile
 
 - [x] Remplacer la marque affichée par NOVARYS IMMO sans modifier les identifiants internes
-- [ ] Compte test-goldenimmo2 + prospect "Prospect Test Isolation B" (Golden Immo) et test Playwright d'isolation (2 comptes + admin overview)
-- [ ] Vérifier que RESEND_API_KEY est la nouvelle clé
+- [x] Compte test-goldenimmo2 + prospect "Prospect Test Isolation B" (Golden Immo) et test Playwright d'isolation (2 comptes + admin overview)
+- [x] Vérifier que RESEND_API_KEY est la nouvelle clé
