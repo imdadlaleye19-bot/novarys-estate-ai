@@ -1,14 +1,8 @@
 import { useEffect } from "react";
-import { useRouter } from "@tanstack/react-router";
+import { useRouter, type ErrorComponentProps } from "@tanstack/react-router";
 import { reportLovableError } from "./lovable-error-reporting";
 
-export default function RootErrorComponent({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
+export default function RootErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
