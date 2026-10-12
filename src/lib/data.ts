@@ -325,8 +325,8 @@ export const leads: Lead[] = [
       "Prospect hautement qualifié. Recherche un appartement 3 chambres à Cocody/Riviera avec un budget maximum de 600 000 FCFA/mois. Projet immédiat, disponible pour une visite cette semaine.",
     matches: ["appartement-premium-riviera-2", "appartement-standing-marcory-zone4", "villa-duplex-cocody-angre"],
     timeline: tl([
-      ["Lead créé depuis la recherche IA", "14 août, 09:12", true],
-      ["Qualification IA terminée — score 94/100", "14 août, 09:13", true],
+      ["Lead créé depuis l'assistant de recherche", "14 août, 09:12", true],
+      ["Qualification automatique — score 94/100", "14 août, 09:13", true],
       ["3 biens recommandés automatiquement", "14 août, 09:14", true],
       ["Sélection envoyée sur WhatsApp", "14 août, 09:22", true],
       ["Visite programmée", "18 août, 11:00", false],
@@ -353,8 +353,8 @@ export const leads: Lead[] = [
       "Acquéreuse sérieuse, financement bancaire pré-accordé. Cherche une villa 4 chambres à Riviera. Sensible à la sécurité et à la proximité des écoles internationales.",
     matches: ["villa-contemporaine-riviera-3", "villa-duplex-cocody-angre", "penthouse-cocody-ambassades"],
     timeline: tl([
-      ["Lead créé depuis la recherche IA", "13 août, 16:40", true],
-      ["Qualification IA terminée — score 91/100", "13 août, 16:41", true],
+      ["Lead créé depuis l'assistant de recherche", "13 août, 16:40", true],
+      ["Qualification automatique — score 91/100", "13 août, 16:41", true],
       ["Contact WhatsApp établi", "13 août, 18:05", true],
       ["Visite programmée", "17 août, 10:00", true],
     ]),
@@ -381,7 +381,7 @@ export const leads: Lead[] = [
     matches: ["appartement-standing-marcory-zone4", "appartement-premium-riviera-2"],
     timeline: tl([
       ["Lead créé depuis le formulaire", "12 août, 11:02", true],
-      ["Qualification IA terminée — score 78/100", "12 août, 11:03", true],
+      ["Qualification automatique — score 78/100", "12 août, 11:03", true],
       ["Appel conseiller effectué", "12 août, 15:30", true],
       ["Relance planifiée", "01 sept.", false],
     ]),
@@ -408,7 +408,7 @@ export const leads: Lead[] = [
     matches: ["terrain-vue-lagune-bingerville"],
     timeline: tl([
       ["Lead créé depuis WhatsApp", "11 août, 08:20", true],
-      ["Qualification IA terminée — score 84/100", "11 août, 08:21", true],
+      ["Qualification automatique — score 84/100", "11 août, 08:21", true],
       ["Dossier investisseur transmis", "11 août, 14:10", true],
     ]),
   },
@@ -434,7 +434,7 @@ export const leads: Lead[] = [
     matches: ["immeuble-bureaux-plateau", "bureau-open-space-marcory"],
     timeline: tl([
       ["Lead créé depuis le formulaire", "10 août, 10:15", true],
-      ["Qualification IA terminée — score 88/100", "10 août, 10:16", true],
+      ["Qualification automatique — score 88/100", "10 août, 10:16", true],
       ["Visite effectuée", "12 août, 09:00", true],
       ["Proposition commerciale envoyée", "13 août, 17:45", true],
     ]),
@@ -460,8 +460,8 @@ export const leads: Lead[] = [
       "Cliente sénégalaise, achat résidence secondaire à Abidjan. Compromis signé sur le penthouse Cocody Ambassades.",
     matches: ["penthouse-cocody-ambassades"],
     timeline: tl([
-      ["Lead créé depuis la recherche IA", "08 août, 12:00", true],
-      ["Qualification IA terminée — score 90/100", "08 août, 12:01", true],
+      ["Lead créé depuis l'assistant de recherche", "08 août, 12:00", true],
+      ["Qualification automatique — score 90/100", "08 août, 12:01", true],
       ["Visite virtuelle réalisée", "09 août, 15:00", true],
       ["Compromis signé", "15 août, 11:30", true],
     ]),
@@ -487,8 +487,8 @@ export const leads: Lead[] = [
       "Prospect en phase d'exploration depuis Cotonou. Projet de mutation professionnelle non confirmé. À nourrir par e-mail.",
     matches: ["villa-duplex-cocody-angre"],
     timeline: tl([
-      ["Lead créé depuis la recherche IA", "16 août, 19:44", true],
-      ["Qualification IA terminée — score 62/100", "16 août, 19:45", true],
+      ["Lead créé depuis l'assistant de recherche", "16 août, 19:44", true],
+      ["Qualification automatique — score 62/100", "16 août, 19:45", true],
     ]),
   },
   {
@@ -512,8 +512,8 @@ export const leads: Lead[] = [
       "Acquéreuse haut de gamme, recherche une villa signature de 5 chambres à Riviera. Visite de la Villa Contemporaine Riviera 3 programmée.",
     matches: ["villa-contemporaine-riviera-3"],
     timeline: tl([
-      ["Lead créé depuis la recherche IA", "15 août, 08:31", true],
-      ["Qualification IA terminée — score 86/100", "15 août, 08:32", true],
+      ["Lead créé depuis l'assistant de recherche", "15 août, 08:31", true],
+      ["Qualification automatique — score 86/100", "15 août, 08:32", true],
       ["Visite programmée", "19 août, 16:00", true],
     ]),
   },
@@ -539,7 +539,7 @@ export const leads: Lead[] = [
     matches: ["bureau-open-space-marcory"],
     timeline: tl([
       ["Lead créé depuis le formulaire", "16 août, 14:05", true],
-      ["Qualification IA terminée — score 71/100", "16 août, 14:06", true],
+      ["Qualification automatique — score 71/100", "16 août, 14:06", true],
     ]),
   },
   {
@@ -564,7 +564,7 @@ export const leads: Lead[] = [
     matches: ["appartement-premium-riviera-2"],
     timeline: tl([
       ["Lead créé depuis WhatsApp", "14 août, 20:11", true],
-      ["Qualification IA terminée — score 89/100", "14 août, 20:12", true],
+      ["Qualification automatique — score 89/100", "14 août, 20:12", true],
       ["Contact conseiller établi", "15 août, 09:00", true],
     ]),
   },
@@ -588,7 +588,7 @@ export const leads: Lead[] = [
     aiSummary:
       "Budget légèrement inférieur aux terrains disponibles à Bingerville. Proposer une parcelle plus petite ou un paiement échelonné.",
     matches: ["terrain-vue-lagune-bingerville"],
-    timeline: tl([["Lead créé depuis la recherche IA", "16 août, 21:02", true]]),
+    timeline: tl([["Lead créé depuis l'assistant de recherche", "16 août, 21:02", true]]),
   },
   {
     id: "clarisse-e",
@@ -611,8 +611,8 @@ export const leads: Lead[] = [
       "Famille d'expatriés, mutation confirmée en octobre. Cherche une villa 4 chambres à Angré avec studio pour le personnel.",
     matches: ["villa-duplex-cocody-angre"],
     timeline: tl([
-      ["Lead créé depuis la recherche IA", "13 août, 07:55", true],
-      ["Qualification IA terminée — score 82/100", "13 août, 07:56", true],
+      ["Lead créé depuis l'assistant de recherche", "13 août, 07:55", true],
+      ["Qualification automatique — score 82/100", "13 août, 07:56", true],
       ["Sélection envoyée par e-mail", "13 août, 08:30", true],
     ]),
   },
@@ -667,7 +667,7 @@ export const propertyInterest = [
 
 export const qualificationFunnel = [
   { step: "Visiteurs", value: 1248 },
-  { step: "Recherche IA", value: 412 },
+  { step: "Assistant de recherche", value: 412 },
   { step: "Leads", value: 186 },
   { step: "Qualifiés", value: 72 },
   { step: "Visites", value: 24 },

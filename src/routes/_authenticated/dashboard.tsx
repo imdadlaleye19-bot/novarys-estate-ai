@@ -104,7 +104,7 @@ function Dashboard() {
 
   const kpis = [
     { label: "Prospects", value: `${k.total}`, delta: `${k.qualified} qualifiés` },
-    { label: "Qualifiés IA", value: `${k.qualified}`, delta: `score moyen ${k.avgScore}/100` },
+    { label: "Prospects qualifiés", value: `${k.qualified}`, delta: `score moyen ${k.avgScore}/100` },
     { label: "Visites programmées", value: `${k.visits}`, delta: `${k.negotiations} en négociation` },
     { label: "Taux de conversion", value: `${k.conversion.toFixed(1)} %`, delta: `${k.won} vente(s)` },
     {
@@ -238,7 +238,7 @@ function Dashboard() {
           </div>
         </Panel>
 
-        <Panel title="Lead qualification" subtitle="Scores IA par semaine">
+        <Panel title="Lead qualification" subtitle="Scores de qualification par semaine">
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={leadsGenerated}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />

@@ -109,8 +109,8 @@ function Landing() {
           <p className="eyebrow text-accent">Plateforme</p>
           <h2 className="mt-3 text-3xl sm:text-4xl">Une expérience immobilière plus intelligente</h2>
           <p className="mt-4 text-muted-foreground">
-            Novarys connecte votre catalogue, votre assistant IA et votre équipe commerciale dans un
-            seul flux continu.
+            Novarys connecte votre catalogue, votre assistant de recherche et votre équipe
+            commerciale dans un seul flux continu.
           </p>
         </div>
 

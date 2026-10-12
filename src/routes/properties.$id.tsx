@@ -197,7 +197,7 @@ function PropertyDetail() {
             </div>
 
             <div className="surface-ink mt-10 rounded-xl p-7">
-              <p className="eyebrow opacity-70">Analyse IA</p>
+              <p className="eyebrow opacity-70">Analyse de compatibilité</p>
               <h2 className="mt-2 text-2xl text-ink-foreground">
                 Pourquoi ce bien correspond à votre projet
               </h2>

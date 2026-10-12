@@ -42,7 +42,7 @@ export const Route = createFileRoute("/_authenticated/leads/$id")({
       };
     }
     const { lead } = loaderData;
-    const description = `${lead.name} — ${lead.project} ${lead.propertyType} à ${lead.location}, score IA ${lead.score}/100.`;
+    const description = `${lead.name} — ${lead.project} ${lead.propertyType} à ${lead.location}, score de qualification ${lead.score}/100.`;
     return {
       meta: [
         { property: "og:type", content: "website" },

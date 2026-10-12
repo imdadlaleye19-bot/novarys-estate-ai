@@ -121,7 +121,7 @@ function Catalogue() {
           <h1 className="mt-3 text-4xl sm:text-5xl">Explore our properties</h1>
           <p className="mt-4 max-w-xl text-muted-foreground">
             {properties.length} biens sélectionnés à Abidjan. Filtrez selon votre projet ou laissez
-            l'assistant IA le faire pour vous.
+            l'assistant de recherche le faire pour vous.
           </p>
         </div>
       </section>
