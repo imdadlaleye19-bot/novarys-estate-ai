@@ -42,17 +42,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "NOVARYS IMMO — Transform your real estate business with AI." },
+      { title: "NOVARYS IMMO — La plateforme intelligente des agences immobilières" },
       {
         name: "description",
         content:
-          "Plateforme immobilière IA pour agences premium d'Afrique francophone : catalogue, assistant de recherche, qualification des prospects et CRM.",
+          "Plateforme immobilière intelligente pour agences premium d'Afrique francophone : catalogue, assistant de recherche, qualification des prospects et CRM.",
       },
       { name: "author", content: "Novarys" },
       { property: "og:title", content: "NOVARYS IMMO" },
       {
         property: "og:description",
-        content: "Transform your real estate business with AI.",
+        content: "Un système intelligent au service de votre agence immobilière.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

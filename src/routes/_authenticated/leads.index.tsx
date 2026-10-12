@@ -20,9 +20,9 @@ export const Route = createFileRoute("/_authenticated/leads/")({
       {
         name: "description",
         content:
-          "Gestion CRM des prospects immobiliers : score IA, budget, zone, statut et date de création, avec recherche, filtres et tri.",
+          "Gestion CRM des prospects immobiliers : score de qualification, budget, zone, statut et date de création, avec recherche, filtres et tri.",
       },
-      { property: "og:title", content: "AI Leads — NOVARYS IMMO" },
+      { property: "og:title", content: "Prospects qualifiés — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Tous vos prospects qualifiés automatiquement, dans une seule table.",

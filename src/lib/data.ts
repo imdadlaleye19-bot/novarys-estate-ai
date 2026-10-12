@@ -690,11 +690,11 @@ export const requestedBudgets = [
 ];
 
 export const aiActivity = [
-  { title: "L'IA a qualifié un nouveau prospect", detail: "Kevin N. — score 62/100", time: "il y a 4 min" },
-  { title: "L'IA a recommandé 3 biens", detail: "Jean K. — Cocody / Riviera", time: "il y a 22 min" },
+  { title: "Nouveau prospect qualifié", detail: "Kevin N. — score 62/100", time: "il y a 4 min" },
+  { title: "3 biens recommandés", detail: "Jean K. — Cocody / Riviera", time: "il y a 22 min" },
   { title: "Nouveau prospect WhatsApp", detail: "Leïla C. — Appartement Riviera", time: "il y a 1 h" },
   { title: "Visite programmée", detail: "Nadia R. — Villa Contemporaine Riviera 3", time: "il y a 3 h" },
-  { title: "L'IA a relancé un prospect inactif", detail: "Marc A. — relance automatique", time: "il y a 5 h" },
+  { title: "Prospect inactif relancé", detail: "Marc A. — relance automatique", time: "il y a 5 h" },
 ];
 
 export const chartColors = {

@@ -47,12 +47,12 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
       {
         name: "description",
         content:
-          "Vue d'ensemble de l'activité commerciale : visiteurs, nouveaux prospects, qualification IA, visites programmées et négociations en cours.",
+          "Vue d'ensemble de l'activité commerciale : visiteurs, nouveaux prospects, qualification automatique, visites programmées et négociations en cours.",
       },
       { property: "og:title", content: "Dashboard agence — NOVARYS IMMO" },
       {
         property: "og:description",
-        content: "Pilotage complet de l'activité immobilière assistée par l'IA.",
+        content: "Pilotage complet de l'activité immobilière de votre agence.",
       },
     ],
   }),

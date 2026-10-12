@@ -12,13 +12,13 @@ export const Route = createFileRoute("/")({
     meta: [
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
-      { title: "NOVARYS IMMO — L'immobilier premium propulsé par l'IA" },
+      { title: "NOVARYS IMMO — L'immobilier premium, guidé par un assistant intelligent" },
       {
         name: "description",
         content:
-          "NOVARYS IMMO aide les agences immobilières d'Afrique francophone à présenter leurs biens, qualifier leurs prospects avec l'IA et suivre leurs ventes.",
+          "NOVARYS IMMO aide les agences immobilières d'Afrique francophone à présenter leurs biens, qualifier automatiquement leurs prospects et suivre leurs ventes.",
       },
-      { property: "og:title", content: "NOVARYS IMMO — Transform your real estate business with AI" },
+      { property: "og:title", content: "NOVARYS IMMO — Un système intelligent pour votre agence immobilière" },
       {
         property: "og:description",
         content:
@@ -54,12 +54,12 @@ const STATS = [
   { value: "+1 200", label: "biens référencés" },
   { value: "+850", label: "prospects qualifiés" },
   { value: "+24", label: "agences accompagnées" },
-  { value: "24/7", label: "assistance IA" },
+  { value: "24/7", label: "assistance permanente" },
 ];
 
 const STEPS = [
   { n: "01", title: "Décrivez votre projet", text: "Achat, location ou investissement — en quelques questions simples." },
-  { n: "02", title: "L'IA analyse vos critères", text: "Budget, zone, type de bien, nombre de chambres et échéance." },
+  { n: "02", title: "L'assistant analyse vos critères", text: "Budget, zone, type de bien, nombre de chambres et échéance." },
   { n: "03", title: "Recevez les biens correspondants", text: "Une sélection classée par score de compatibilité." },
   { n: "04", title: "Connectez-vous à un conseiller", text: "Par WhatsApp ou téléphone, avec votre profil déjà transmis." },
 ];
@@ -81,7 +81,7 @@ function Landing() {
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Trouvez le bien qui correspond à votre vie. Une expérience immobilière premium,
-              précise et humaine, propulsée par l’IA.
+              précise et humaine.
             </p>
             <div className="mt-9 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
               <Button asChild size="lg" variant="accent">
