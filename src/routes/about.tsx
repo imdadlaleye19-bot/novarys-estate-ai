@@ -70,7 +70,7 @@ function About() {
 
         <div className="mt-14 flex flex-col gap-3 sm:flex-row">
           <Button asChild size="lg" variant="hero">
-            <Link to="/ai-search">Essayer l'assistant IA</Link>
+            <Link to="/ai-search">Essayer l'assistant de recherche</Link>
           </Button>
           <Button asChild size="lg" variant="quiet">
             <Link to="/dashboard">Voir la démo agence</Link>

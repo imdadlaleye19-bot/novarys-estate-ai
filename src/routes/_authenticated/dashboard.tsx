@@ -282,7 +282,7 @@ function Dashboard() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-        <Panel title="Derniers prospects" subtitle="Qualifiés automatiquement par l'IA">
+        <Panel title="Derniers prospects" subtitle="Qualifiés automatiquement">
           <div className="divide-y divide-border">
             {recentLeads.map((l) => (
               <Link
@@ -304,7 +304,7 @@ function Dashboard() {
           </div>
         </Panel>
 
-        <Panel title="AI Activity" subtitle="Actions automatiques récentes">
+        <Panel title="Activité récente" subtitle="Actions automatiques récentes">
           <div className="space-y-4">
             {aiActivity.map((a) => (
               <div key={a.title + a.time} className="flex gap-3">

@@ -232,7 +232,7 @@ function PropertyDetail() {
                 </Button>
                 <Button asChild variant="accent">
                   <Link to="/ai-search">
-                    <Sparkles className="size-4" /> Trouver des biens similaires avec l'IA
+                    <Sparkles className="size-4" /> Trouver des biens similaires
                   </Link>
                 </Button>
               </div>

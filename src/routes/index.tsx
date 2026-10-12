@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
 const FEATURES = [
   {
     icon: Brain,
-    title: "AI Property Matching",
+    title: "Correspondance de biens intelligente",
     text: "L'assistant analyse le projet du visiteur et propose en quelques secondes les biens réellement compatibles, avec un score de correspondance.",
   },
   {
@@ -87,7 +87,7 @@ function Landing() {
               <Button asChild size="lg" variant="accent">
                 <Link to="/ai-search">
                   <Sparkles className="size-4" />
-                  Trouver mon bien avec l'IA
+                  Assistant de recherche
                 </Link>
               </Button>
               <Button
@@ -183,7 +183,7 @@ function Landing() {
       <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
         <div className="surface-ink overflow-hidden rounded-2xl px-8 py-14 sm:px-14 sm:py-20">
           <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-5xl">Transformez votre agence avec l'IA.</h2>
+            <h2 className="text-3xl sm:text-5xl">Transformez votre agence avec un système intelligent.</h2>
             <p className="mt-4 opacity-75">
               Catalogue intelligent, qualification automatique et pipeline commercial : découvrez la
               démonstration complète de NOVARYS IMMO.
