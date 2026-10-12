@@ -17,7 +17,7 @@ export function SiteFooter() {
           <p className="eyebrow opacity-60">Plateforme</p>
           <div className="mt-3 flex flex-col gap-2 opacity-80">
             <Link to="/properties">Catalogue</Link>
-            <Link to="/ai-search">Assistant IA</Link>
+            <Link to="/ai-search">Assistant de recherche</Link>
             <Link to="/lead">Être contacté</Link>
           </div>
         </div>

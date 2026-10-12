@@ -44,7 +44,7 @@ export function SiteHeader() {
           <Button asChild variant="hero" size="sm" className="hidden sm:inline-flex">
             <Link to="/ai-search">
               <Sparkles className="size-4" />
-              Trouver mon bien avec l'IA
+              Assistant de recherche
             </Link>
           </Button>
           <button
@@ -82,7 +82,7 @@ export function SiteHeader() {
             <Button asChild variant="hero" className="mt-3 w-full">
               <Link to="/ai-search" onClick={() => setOpen(false)}>
                 <Sparkles className="size-4" />
-                Trouver mon bien avec l'IA
+                Assistant de recherche
               </Link>
             </Button>
           </nav>
