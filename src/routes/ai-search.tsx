@@ -1,28 +1,31 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { propertiesQuery } from "@/lib/estate-queries";
 import { ArrowLeft, MessageCircle, RotateCcw, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PropertyCard } from "@/components/property-card";
 import { Button } from "@/components/ui/button";
-import { getWhatsAppLink, properties, type Property } from "@/lib/data";
+import { getWhatsAppLink, type Property } from "@/lib/data";
 
 export const Route = createFileRoute("/ai-search")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(propertiesQuery()),
   head: () => ({
     meta: [
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
-      { title: "Assistant IA immobilier — NOVARYS IMMO" },
+      { title: "Assistant de recherche immobilière — NOVARYS IMMO" },
       {
         name: "description",
         content:
-          "Répondez à six questions et l'assistant Novarys vous propose les biens les plus adaptés à votre projet, avec un score de compatibilité.",
+          "Répondez à six questions et notre assistant de recherche vous propose les biens les plus adaptés à votre projet, avec un score de compatibilité.",
       },
       { property: "og:title", content: "Find your perfect property — NOVARYS IMMO" },
       {
         property: "og:description",
-        content: "Recherche immobilière conversationnelle propulsée par l'intelligence artificielle.",
+        content: "Un assistant de recherche intelligent qui compare vos critères aux biens disponibles.",
       },
     ],
   }),
@@ -49,7 +52,7 @@ const STEPS: Step[] = [
   {
     key: "project",
     question: "Quel est votre projet ?",
-    hint: "Bonsoir 👋 Je suis l'assistant Novarys. Quelques questions et je vous propose une sélection.",
+    hint: "Bonsoir 👋 Je suis l'assistant de recherche Novarys. Quelques questions et je vous propose une sélection.",
     options: ["Acheter", "Louer", "Investir"],
   },
   { key: "type", question: "Quel type de bien recherchez-vous ?", options: ["Appartement", "Villa", "Terrain", "Bureau"] },
@@ -87,23 +90,42 @@ const budgetCeiling: Record<string, number> = {
 
 function scoreProperty(p: Property, a: Answers) {
   let score = 55;
+  const reasons: string[] = [];
   const wantsRent = a.project === "Louer";
-  if ((wantsRent && p.transaction === "Location") || (!wantsRent && p.transaction === "Achat")) score += 15;
-  if (p.type === a.type) score += 14;
-  if (p.location === a.zone) score += 12;
-
+  if ((wantsRent && p.transaction === "Location") || (!wantsRent && p.transaction === "Achat")) {
+    score += 15;
+    reasons.push(wantsRent ? "Disponible à la location" : "Disponible à l'achat");
+  }
+  if (p.type === a.type) {
+    score += 14;
+    reasons.push("Type de bien recherché");
+  }
+  if (p.location === a.zone) {
+    score += 12;
+    reasons.push("Même quartier");
+  }
   const ceiling = budgetCeiling[a.budget] ?? Infinity;
-  if (p.price <= ceiling) score += 10;
-  else score -= 18;
-
+  if (p.price <= ceiling) {
+    score += 10;
+    reasons.push("Budget compatible");
+  } else score -= 18;
   const wanted = a.bedrooms === "5+" ? 5 : Number(a.bedrooms);
-  if (!Number.isNaN(wanted) && p.bedrooms >= wanted) score += 6;
-  if (a.timing === "Immédiatement" && p.available) score += 3;
-
-  return Math.max(41, Math.min(98, score));
+  if (!Number.isNaN(wanted) && p.bedrooms >= wanted) {
+    score += 6;
+    reasons.push("Nombre de chambres correspondant");
+  }
+  if (a.timing === "Immédiatement" && p.available) {
+    score += 3;
+    reasons.push("Disponible immédiatement");
+  }
+  return { match: Math.max(41, Math.min(98, score)), reasons };
 }
 
+/** Seuil à partir duquel un bien est considéré comme une vraie correspondance. */
+const GOOD_MATCH = 80;
+
 function AiSearch() {
+  const { data: properties } = useSuspenseQuery(propertiesQuery());
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Partial<Answers>>({});
   const done = step >= STEPS.length;
@@ -112,12 +134,18 @@ function AiSearch() {
     if (!done) return [];
     const a = answers as Answers;
     return properties
-      .map((p) => ({ property: p, match: scoreProperty(p, a) }))
+      .map((p) => ({ property: p, ...scoreProperty(p, a) }))
       .sort((x, y) => y.match - x.match)
       .slice(0, 3);
   }, [done, answers]);
 
-  const current = STEPS[step];
+  const zones = useMemo(
+    () => Array.from(new Set(properties.map((p) => p.location))).sort(),
+    [properties],
+  );
+  const steps = STEPS.map((s) => (s.key === "zone" && zones.length ? { ...s, options: zones } : s));
+  const current = steps[step];
+  const goodMatches = results.filter((r) => r.match >= GOOD_MATCH).length;
 
   const pick = (value: string) => {
     if (!current) return;
@@ -136,11 +164,11 @@ function AiSearch() {
 
       <section className="mx-auto max-w-3xl px-5 py-14 sm:px-8 sm:py-20">
         <div className="text-center">
-          <p className="eyebrow text-accent">Assistant IA</p>
+          <p className="eyebrow text-accent">Assistant de recherche</p>
           <h1 className="mt-3 text-4xl sm:text-5xl">Find your perfect property.</h1>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            Répondez à quelques questions et notre assistant vous proposera les biens les plus
-            adaptés.
+            Répondez à quelques questions et notre assistant de recherche compare vos critères
+            aux biens réellement disponibles.
           </p>
         </div>
 
@@ -215,7 +243,11 @@ function AiSearch() {
                 terminée
               </p>
               <h2 className="mt-2 text-2xl">
-                Nous avons trouvé {results.length} propriétés correspondant à votre recherche.
+                {results.length === 0
+                  ? "Aucun bien n'est disponible pour le moment."
+                  : goodMatches > 0
+                    ? `${goodMatches} bien(s) correspondent bien à votre recherche.`
+                    : "Aucun bien ne correspond parfaitement à vos critères actuellement, voici les plus proches."}
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 {answers.project} · {answers.type} · {answers.zone} · {answers.budget} ·{" "}
@@ -225,7 +257,14 @@ function AiSearch() {
 
             <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {results.map((r) => (
-                <PropertyCard key={r.property.id} property={r.property} match={r.match} />
+                <div key={r.property.id} className="space-y-2">
+                  <PropertyCard property={r.property} match={r.match} />
+                  <p className="text-xs text-muted-foreground">
+                    {r.reasons.length
+                      ? r.reasons.join(", ")
+                      : "Correspondance partielle avec vos critères"}
+                  </p>
+                </div>
               ))}
             </div>
 
@@ -240,7 +279,7 @@ function AiSearch() {
                 <Button asChild variant="accent">
                   <a
                     href={getWhatsAppLink(
-                      `Bonjour NOVARYS IMMO, j'ai utilisé l'assistant IA et souhaite recevoir les fiches de : ${results
+                      `Bonjour NOVARYS IMMO, j'ai utilisé l'assistant de recherche et souhaite recevoir les fiches de : ${results
                         .map((r) => r.property.name)
                         .join(", ")}.\nMerci d'organiser une visite.`
                     )}
