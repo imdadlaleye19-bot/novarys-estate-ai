@@ -81,7 +81,7 @@ export function funnelFrom(leads: Lead[]) {
   const k = leadKpis(leads, []);
   return [
     { step: "Prospects reçus", value: k.total },
-    { step: "Qualifiés par l'IA", value: k.qualified },
+    { step: "Qualifiés automatiquement", value: k.qualified },
     { step: "Visites programmées", value: k.visits },
     { step: "Négociations", value: k.negotiations },
     { step: "Ventes conclues", value: k.won },

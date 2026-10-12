@@ -47,12 +47,12 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
       {
         name: "description",
         content:
-          "Vue d'ensemble de l'activité commerciale : visiteurs, nouveaux prospects, qualification IA, visites programmées et négociations en cours.",
+          "Vue d'ensemble de l'activité commerciale : visiteurs, nouveaux prospects, qualification automatique, visites programmées et négociations en cours.",
       },
       { property: "og:title", content: "Dashboard agence — NOVARYS IMMO" },
       {
         property: "og:description",
-        content: "Pilotage complet de l'activité immobilière assistée par l'IA.",
+        content: "Pilotage complet de l'activité immobilière de votre agence.",
       },
     ],
   }),
@@ -104,7 +104,7 @@ function Dashboard() {
 
   const kpis = [
     { label: "Prospects", value: `${k.total}`, delta: `${k.qualified} qualifiés` },
-    { label: "Qualifiés IA", value: `${k.qualified}`, delta: `score moyen ${k.avgScore}/100` },
+    { label: "Prospects qualifiés", value: `${k.qualified}`, delta: `score moyen ${k.avgScore}/100` },
     { label: "Visites programmées", value: `${k.visits}`, delta: `${k.negotiations} en négociation` },
     { label: "Taux de conversion", value: `${k.conversion.toFixed(1)} %`, delta: `${k.won} vente(s)` },
     {
@@ -238,7 +238,7 @@ function Dashboard() {
           </div>
         </Panel>
 
-        <Panel title="Lead qualification" subtitle="Scores IA par semaine">
+        <Panel title="Lead qualification" subtitle="Scores de qualification par semaine">
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={leadsGenerated}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
@@ -282,7 +282,7 @@ function Dashboard() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-        <Panel title="Derniers prospects" subtitle="Qualifiés automatiquement par l'IA">
+        <Panel title="Derniers prospects" subtitle="Qualifiés automatiquement">
           <div className="divide-y divide-border">
             {recentLeads.map((l) => (
               <Link
@@ -304,7 +304,7 @@ function Dashboard() {
           </div>
         </Panel>
 
-        <Panel title="AI Activity" subtitle="Actions automatiques récentes">
+        <Panel title="Activité récente" subtitle="Actions automatiques récentes">
           <div className="space-y-4">
             {aiActivity.map((a) => (
               <div key={a.title + a.time} className="flex gap-3">

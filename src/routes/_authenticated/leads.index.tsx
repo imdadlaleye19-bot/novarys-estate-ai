@@ -20,9 +20,9 @@ export const Route = createFileRoute("/_authenticated/leads/")({
       {
         name: "description",
         content:
-          "Gestion CRM des prospects immobiliers : score IA, budget, zone, statut et date de création, avec recherche, filtres et tri.",
+          "Gestion CRM des prospects immobiliers : score de qualification, budget, zone, statut et date de création, avec recherche, filtres et tri.",
       },
-      { property: "og:title", content: "AI Leads — NOVARYS IMMO" },
+      { property: "og:title", content: "Prospects qualifiés — NOVARYS IMMO" },
       {
         property: "og:description",
         content: "Tous vos prospects qualifiés automatiquement, dans une seule table.",
@@ -105,7 +105,7 @@ function LeadsPage() {
   const rows = filtered.slice(current * PAGE_SIZE, current * PAGE_SIZE + PAGE_SIZE);
 
   return (
-    <AppShell title="AI Leads" subtitle={`${leads.length} prospects qualifiés automatiquement`}>
+    <AppShell title="Prospects qualifiés" subtitle={`${leads.length} prospects qualifiés automatiquement`}>
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative min-w-[220px] flex-1">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />

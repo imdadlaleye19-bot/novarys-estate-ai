@@ -20,7 +20,7 @@ import {
 const NAV = [
   { label: "Overview", to: "/dashboard", icon: LayoutDashboard },
   { label: "Properties", to: "/properties", icon: Building2 },
-  { label: "AI Leads", to: "/leads", icon: Users },
+  { label: "Prospects qualifiés", to: "/leads", icon: Users },
   { label: "Pipeline", to: "/pipeline", icon: KanbanSquare },
   { label: "Appointments", to: "/appointments", icon: CalendarCheck },
   { label: "Ad spend", to: "/ad-spend", icon: Megaphone },

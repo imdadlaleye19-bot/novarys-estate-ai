@@ -42,7 +42,7 @@ export const Route = createFileRoute("/_authenticated/leads/$id")({
       };
     }
     const { lead } = loaderData;
-    const description = `${lead.name} — ${lead.project} ${lead.propertyType} à ${lead.location}, score IA ${lead.score}/100.`;
+    const description = `${lead.name} — ${lead.project} ${lead.propertyType} à ${lead.location}, score de qualification ${lead.score}/100.`;
     return {
       meta: [
         { property: "og:type", content: "website" },
@@ -173,10 +173,10 @@ function LeadDetail() {
             </dl>
           </section>
 
-          {/* AI summary */}
+          {/* Résumé du prospect */}
           <section className="surface-ink rounded-xl p-6">
             <p className="flex items-center gap-2 text-sm font-semibold text-sidebar-primary">
-              <Sparkles className="size-4" /> AI Summary
+              <Sparkles className="size-4" /> Résumé du prospect
             </p>
             <p className="mt-3 text-sm leading-relaxed opacity-85">{lead.aiSummary}</p>
           </section>

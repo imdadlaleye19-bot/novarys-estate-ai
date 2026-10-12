@@ -155,8 +155,8 @@ function LeadPage() {
           <p className="eyebrow text-accent">Qualification</p>
           <h1 className="mt-3 text-4xl sm:text-5xl">Let's find your property.</h1>
           <p className="mt-4 text-muted-foreground">
-            Une minute suffit. Vos réponses permettent à notre IA de préparer une sélection avant
-            même l'appel du conseiller.
+            Une minute suffit. Vos réponses permettent à notre assistant de préparer une sélection
+            avant même l'appel du conseiller.
           </p>
         </div>
 

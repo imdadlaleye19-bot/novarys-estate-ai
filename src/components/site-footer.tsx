@@ -10,7 +10,7 @@ export function SiteFooter() {
             <span className="eyebrow opacity-70">IMMO</span>
           </div>
           <p className="mt-3 max-w-sm text-sm opacity-70">
-            Transform your real estate business with AI. Abidjan · Dakar · Cotonou.
+            Un système intelligent au service de votre agence. Abidjan · Dakar · Cotonou.
           </p>
         </div>
         <div className="text-sm">

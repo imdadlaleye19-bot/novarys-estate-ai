@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_authenticated/pipeline")({
       {
         name: "description",
         content:
-          "Kanban commercial : déplacez vos prospects de la qualification à la signature, avec score IA et budget sur chaque carte.",
+          "Kanban commercial : déplacez vos prospects de la qualification à la signature, avec score de qualification et budget sur chaque carte.",
       },
       { property: "og:title", content: "Pipeline commercial — NOVARYS IMMO" },
       {

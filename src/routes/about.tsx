@@ -12,12 +12,12 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "NOVARYS IMMO équipe les agences immobilières d'Abidjan, Dakar et Cotonou d'une plateforme de recherche et de qualification pilotée par l'IA.",
+          "NOVARYS IMMO équipe les agences immobilières d'Abidjan, Dakar et Cotonou d'une plateforme de recherche et de qualification pilotée par un assistant intelligent.",
       },
       { property: "og:title", content: "À propos — NOVARYS IMMO" },
       {
         property: "og:description",
-        content: "La plateforme IA des agences immobilières premium d'Afrique francophone.",
+        content: "La plateforme intelligente des agences immobilières premium d'Afrique francophone.",
       },
     ],
   }),
@@ -46,7 +46,7 @@ function About() {
       <section className="mx-auto max-w-4xl px-5 py-20 sm:px-8 sm:py-28">
         <p className="eyebrow text-accent">À propos</p>
         <h1 className="mt-3 text-4xl sm:text-5xl">
-          Transform your real estate business with AI.
+          Transformez la façon dont vous vendez l'immobilier.
         </h1>
         <p className="mt-6 text-lg text-muted-foreground">
           NOVARYS IMMO est une plateforme SaaS conçue pour les agences immobilières, promoteurs et
@@ -70,7 +70,7 @@ function About() {
 
         <div className="mt-14 flex flex-col gap-3 sm:flex-row">
           <Button asChild size="lg" variant="hero">
-            <Link to="/ai-search">Essayer l'assistant IA</Link>
+            <Link to="/ai-search">Essayer l'assistant de recherche</Link>
           </Button>
           <Button asChild size="lg" variant="quiet">
             <Link to="/dashboard">Voir la démo agence</Link>

@@ -197,7 +197,7 @@ function PropertyDetail() {
             </div>
 
             <div className="surface-ink mt-10 rounded-xl p-7">
-              <p className="eyebrow opacity-70">Analyse IA</p>
+              <p className="eyebrow opacity-70">Analyse de compatibilité</p>
               <h2 className="mt-2 text-2xl text-ink-foreground">
                 Pourquoi ce bien correspond à votre projet
               </h2>
@@ -232,7 +232,7 @@ function PropertyDetail() {
                 </Button>
                 <Button asChild variant="accent">
                   <Link to="/ai-search">
-                    <Sparkles className="size-4" /> Trouver des biens similaires avec l'IA
+                    <Sparkles className="size-4" /> Trouver des biens similaires
                   </Link>
                 </Button>
               </div>
